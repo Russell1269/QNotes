@@ -4,7 +4,7 @@ if (process.env.NODE_ENV != "production") {
 }
 const express = require("express");
 const session = require("express-session");
-const MongoStore = require('connect-mongo').default;
+const MongoStore = require("connect-mongo").default;
 const flash = require("@stz184/connect-flash");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
@@ -65,6 +65,18 @@ const sessionOption = {
     ttl: 7 * 24 * 60 * 60, // ডাটাবেজ থেকে ৭ দিন পর অটোমেটিক ডিলিট হবে (Time to live)
   }),
 };
+
+async function main() {
+  await mongoose.connect(dbUrl);
+}
+main()
+  .then(() => {
+    console.log("Database Connected");
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+
 app.use(session(sessionOption));
 app.use(flash());
 
@@ -78,20 +90,9 @@ passport.deserializeUser(User.deserializeUser());
 app.use((req, res, next) => {
   res.locals.successMsg = req.flash("success");
   res.locals.errorMsg = req.flash("error");
-  res.locals.currentUser = req.user;
+  res.locals.currentUser = req.user || null;
   next();
 });
-
-async function main() {
-  await mongoose.connect(dbUrl);
-}
-main()
-  .then(() => {
-    console.log("Database Connected");
-  })
-  .catch((err) => {
-    console.log(err);
-  });
 
 //router
 app.use("/", auth);
