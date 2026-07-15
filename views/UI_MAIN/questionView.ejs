@@ -1,0 +1,347 @@
+<% layout('LAYOUT/boilarplate') -%>
+
+
+<!-- Main Content Layout -->
+<main class="container my-5">
+  <div class="row g-4">
+
+    <!-- Left Column: Broad Image Showcase & Download Action -->
+    <div class="col-12 col-lg-8">
+      <div class="broad-image-container bg-white rounded-3 border p-3 shadow-sm">
+
+        <!-- ১. প্রধান বা মেইন ইমেজ প্রিভিউয়ার -->
+        <div class="main-preview-box text-center mb-3 bg-light rounded-3 overflow-hidden border d-flex align-items-center justify-content-center" style="height: 380px;">
+          <img id="mainQuestionImage" src="<%= (question.imageUrl && question.imageUrl.url && question.imageUrl.url.length > 0) ? question.imageUrl.url[0] : 'https://unsplash.com' %>" class="img-fluid object-fit-contain h-100 w-100" alt="<%= question.title %> Preview">
+        </div>
+
+        <!-- ২. মাল্টিপল ইমেজ থাম্বনেইল গ্যালারি (যদি একের অধিক ছবি থাকে) -->
+        <% if (question.imageUrl && question.imageUrl.url && question.imageUrl.url.length > 1) { %>
+        <div class="image-gallery-thumbnails d-flex gap-2 justify-content-center flex-wrap mb-4">
+          <% question.imageUrl.url.forEach(function(imgUrl, index) { %>
+          <div class="thumbnail-wrapper rounded border overflow-hidden <%= index === 0 ? 'border-primary border-2' : '' %>" style="width: 70px; height: 70px; cursor: pointer; transition: all 0.2s ease;">
+            <img src="<%= imgUrl %>" class="w-100 h-100 object-fit-cover q-thumb" onclick="changeMainImage(this)" alt="Thumbnail <%= index + 1 %>">
+          </div>
+          <% }) %>
+        </div>
+        <% } %>
+
+        <!-- ৩. ডাউনলোড এবং কন্ট্রিবিউশন সেকশন (নিচের অংশ আগের মতোই থাকবে) -->
+        <div class="download-area p-4 text-center border-top bg-light rounded-bottom-3 mx-n3 mb-n3">
+          <% if (question.fileUrl && question.fileUrl.url) { %>
+          <p class="text-muted small mb-3"><i class="bi bi-info-circle me-1"></i> Click below to get the official document file attachment (PDF/Doc).</p>
+          <a href="<%= question.fileUrl.url %>" target="_blank" class="btn btn-primary btn-lg px-5 shadow-sm w-100 w-sm-auto mb-3">
+            <i class="bi bi-cloud-arrow-down-fill me-2"></i> Download Document
+          </a>
+          <% } else { %>
+          <button class="btn btn-secondary btn-lg px-5 disabled w-100 w-sm-auto mb-3">
+            <i class="bi bi-file-earmark-x me-2"></i> No Document Attached
+          </button>
+          <% } %>
+
+          <hr class="text-black-50 my-3">
+          <p class="text-muted small mb-2">Have you any solutions for this question? Please log in.</p>
+
+          <% if (currentUser) { %>
+          <button type="button" class="btn btn-outline-success btn-md px-4 shadow-sm w-100 w-sm-auto fw-semibold" data-bs-toggle="modal" data-bs-target="#uploadContributionModal">
+            <i class="bi bi-cloud-plus-fill me-2"></i> Upload your answer
+          </button>
+
+          <button type="button" class="btn btn-sm btn-outline-danger px-2 border-0 shadow-none mt-2" onclick="openReportModal('<%= question._id %>', 'Question')" title="Report Question">
+            <i class="bi bi-exclamation-triangle"></i>
+            <span class="d-none d-sm-inline small">Report</span>
+          </button>
+          <% } %>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- পপ-আপ মডাল ফর্ম (Pop-up Modal Form) -->
+    <div class="modal fade" id="uploadContributionModal" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content text-start">
+          <!-- টেক্সট বামে রাখার জন্য text-start -->
+
+          <div class="modal-header bg-dark text-white">
+            <h5 class="modal-title fw-bold" id="uploadModalLabel"><i class="bi bi-file-earmark-arrow-up me-2 text-success"></i>Add Your Answer</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+
+
+
+          <!-- ফরমটি আপনার আগের তৈরি করা POST /question রাউটে ডেটা পাঠাবে -->
+
+          <form action="/question/<%= question._id %>/answer" method="POST" class="needs-validation" novalidate enctype="multipart/form-data">
+            <div class="modal-body p-4">
+              <div class="row g-3">
+
+                <div class="col-12">
+                  <label class="form-label fw-semibold">Written or Necessary Goods for Answer<span class="text-danger">*</span></label>
+                  <textarea type="text" class="form-control" name="writtenAnswer" placeholder="e.g: 1)a. jackfruit" required></textarea>
+                  <div class="valid-feedback">Looks good!</div>
+                  <div class="invalid-feedback">Please write your answer or direction for read answer.</div>
+                </div>
+
+                <div class="col-12">
+                  <label class="form-label fw-semibold">Answer Image<span class="text-danger">*</span></label>
+                  <input type="file" class="form-control" name="imageUrl" id="imageUrl" placeholder="https://example.com" required multiple>
+                  <div class="valid-feedback">Looks good!</div>
+                  <div class="invalid-feedback">upload photo</div>
+                </div>
+
+                <div class="col-12">
+                  <label class="form-label fw-semibold">PDF File</label>
+                  <input type="file" class="form-control" name="fileUrl" id="fileUrl" placeholder="google drive link">
+
+                </div>
+
+              </div>
+            </div>
+            <div class="modal-footer bg-light">
+              <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">cancel</button>
+              <button type="submit" class="btn btn-success btn-sm px-4 fw-bold">upload</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Right Column: Question Details Context Info -->
+    <div class="col-12 col-lg-4">
+      <div class="card meta-card p-4">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <span class="badge badge-subject px-3 py-2 rounded-pill fw-bold text-uppercase font-monospace">
+            <%= question.subject %>
+          </span>
+          <% if(question.year) { %>
+          <span class="badge bg-dark px-2.5 py-1.5 font-monospace">
+            <%= question.year %> <%= question.session ? `(${question.session})` : '' %>
+          </span>
+          <% } %>
+        </div>
+
+        <h2 class="h4 fw-bold text-dark mb-3"><%= question.title %></h2>
+        <hr class="text-black-50">
+
+        <!-- Specific Metadata Grid -->
+        <div class="mb-4">
+          <div class="d-flex justify-content-between mb-2 small">
+            <span class="text-muted"><i class="bi bi-person me-1"></i> Uploaded By:</span>
+            <span class="fw-semibold font-monospace text-truncate" style="max-width: 180px;"><%= question.owner.name %></span>
+          </div>
+          <div class="d-flex justify-content-between mb-2 small">
+            <span class="text-muted"><i class="bi bi-calendar3 me-1"></i> Date Posted:</span>
+            <span class="fw-semibold text-secondary"><%= new Date(question.createdAt).toLocaleDateString() %></span>
+          </div>
+        </div>
+
+        <!-- Description Box -->
+        <h6 class="fw-bold text-dark mb-2">Description</h6>
+        <p class="text-muted small mb-4 bg-light p-3 rounded" style="line-height: 1.6;">
+          <%= question.description || 'No descriptive context details provided for this question paper asset collection.' %>
+        </p>
+
+        <!-- Tags Wrapper -->
+        <% if (question.tags && question.tags.length > 0) { %>
+        <h6 class="fw-bold text-dark mb-2">Indexed Tags</h6>
+        <div class="d-flex flex-wrap gap-1">
+          <% question.tags.forEach(function(tag) { %>
+          <span class="badge tag-badge px-2 py-1.5 small">#<%= tag %></span>
+          <% }) %>
+        </div>
+        <% } %>
+
+        <% if (currentUser && currentUser._id.equals(question.owner._id)) { %>
+
+        <!-- Edit & Delete Action Buttons Wrapper -->
+        <div class="d-flex gap-2 mt-4 pt-3 border-top border-light">
+          <!-- Edit Button -->
+          <a href="/question/<%= question._id %>/edit" class="btn btn-outline-dark btn-sm rounded-pill px-4 flex-grow-1 flex-sm-grow-0 fw-semibold d-flex align-items-center justify-content-center gap-2" style="transition: all 0.2s ease;">
+            <i class="bi bi-pencil-square"></i> Edit
+          </a>
+
+          <!-- Delete Button Form -->
+          <form action="/question/<%= question._id %>?_method=DELETE" method="POST" class="flex-grow-1 flex-sm-grow-0 m-0" onsubmit="return confirm('Are you sure you want to delete this question?');">
+            <button type="submit" class="btn btn-danger btn-sm rounded-pill px-4 w-100 fw-semibold d-flex align-items-center justify-content-center gap-2" style="background-color: #ff385c; border: none; transition: all 0.2s ease;">
+              <i class="bi bi-trash3"></i> Delete
+            </button>
+          </form>
+        </div>
+        <% } %>
+
+      </div>
+    </div>
+
+    <!-- questionView.ejs ফাইলের ভেতর নিচে এটি যুক্ত করুন -->
+    <div class="container mt-5">
+      <h3 class="fw-bold mb-4">Solutions</h3>
+
+      <% if (question.answers && question.answers.length > 0) { %>
+      <% question.answers.forEach(function(answer) { %>
+      <div class="card mb-3 shadow-sm border-0 rounded-3">
+        <div class="card-body">
+          <!-- হেডার: লেখক এবং তারিখ -->
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <h6 class="fw-bold text-primary mb-0">
+              <%= answer.author ? answer.author.name : "Anonymous" %> <br>
+              <span class="text-muted text-truncate fw-normal" style="font-size: 0.70rem;">
+                <%= answer.author ? answer.author.university : "N/A" %>
+              </span>
+            </h6>
+            <small class="text-muted"><%= new Date(answer.createdAt).toLocaleDateString() %></small>
+          </div>
+
+          <!-- ভিউ মোড কন্টেনার (স্বাভাবিক অবস্থায় এটি দেখা যাবে) -->
+          <div id="view-mode-<%= answer._id %>">
+            <p class="card-text text-secondary small" style="white-space: pre-line;"><%= answer.writtenAnswer %></p>
+
+            <!-- === ১. ইমেজ গ্যালারি সেকশন (সিঙ্গেল এবং মাল্টিপল ইমেজ প্রফেশনাল সাপোর্ট) === -->
+            <% if (answer.imageUrl && answer.imageUrl.url && answer.imageUrl.url.length > 0) { %>
+            <div class="answer-gallery mt-3 mb-3">
+              <!-- প্রধান বড় ছবি প্রিভিউ -->
+              <div class="main-ans-preview mb-2 bg-light border rounded-3 overflow-hidden text-center" style="max-height: 320px;">
+                <img id="mainAnsImg-<%= answer._id %>" src="<%= answer.imageUrl.url[0] %>" class="img-fluid object-fit-contain w-100" style="max-height: 320px;" alt="Solution Preview">
+              </div>
+
+              <!-- যদি ১টির বেশি ছবি থাকে তবে নিচে ছোট থাম্বনেইল গ্রিড দেখাবে -->
+              <% if (answer.imageUrl.url.length > 1) { %>
+              <div class="d-flex gap-1.5 flex-wrap">
+                <% answer.imageUrl.url.forEach(function(imgUrl, idx) { %>
+                <div class="border rounded overflow-hidden <%= idx === 0 ? 'border-primary border-2' : '' %>" style="width: 55px; height: 55px; cursor: pointer;" onclick="changeAnsPreview(this, '<%= answer._id %>')">
+                  <img src="<%= imgUrl %>" class="w-100 h-100 object-fit-cover" alt="Thumb">
+                </div>
+                <% }) %>
+              </div>
+              <% } %>
+            </div>
+            <% } %>
+
+            <!-- অ্যাকশন বাটনসমূহ -->
+            <div class="d-flex gap-2 align-items-center mt-3 flex-wrap">
+              <!-- ভিউ ফুল স্ক্রিন বাটন (মেইন ইমেজের লাইভ লিঙ্কের জন্য) -->
+              <% if (answer.imageUrl && answer.imageUrl.url && answer.imageUrl.url.length > 0) { %>
+              <a id="viewFullBtn-<%= answer._id %>" href="<%= answer.imageUrl.url[0] %>" target="_blank" class="btn btn-sm btn-outline-primary px-3 shadow-sm">
+                <i class="bi bi-eye me-1"></i> View Full Image
+              </a>
+              <% } %>
+
+              <!-- === ২. পিডিএফ ফাইল ডাউনলোডের নতুন বাটন === -->
+              <% if (answer.fileUrl && answer.fileUrl.url) { %>
+              <a href="<%= answer.fileUrl.url %>" target="_blank" class="btn btn-sm btn-outline-info px-3 shadow-sm text-dark fw-medium">
+                <i class="bi bi-file-earmark-pdf-fill text-danger me-1"></i> Download Solution PDF
+              </a>
+              <% } %>
+              <input type="hidden" name="questionId" value="<%= question._id %>">
+
+              <!-- শুধুমাত্র অথর বা লগইন করা ইউজার নিজেরটা এডিট/ডিলিট করতে পারবে -->
+              <% if (currentUser && currentUser._id.equals(answer.author._id)) { %>
+              <button type="button" class="btn btn-sm btn-outline-warning px-3 shadow-sm" onclick="toggleEditMode('<%= answer._id %>')">
+                <i class="bi bi-pencil-square me-1"></i> Update
+              </button>
+              <form action="/question/<%= question._id %>/answer/<%= answer._id %>?_method=DELETE" method="POST" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this answer?');">
+                <button type="submit" class="btn btn-sm btn-outline-danger px-3 shadow-sm">
+                  <i class="bi bi-trash3 me-1"></i> Delete </button>
+              </form>
+              <% } %>
+
+              <% if (currentUser) { %>
+              <button type="button" class="btn btn-sm btn-outline-danger px-2 border-0 shadow-none" onclick="openReportModal('<%= answer._id %>', 'QuestionAnswer')" , title="Report Answer">
+                <i class="bi bi-exclamation-triangle"></i>
+                <span class="d-none d-sm-inline small">Report</span>
+              </button>
+              <% } %>
+            </div>
+          </div>
+
+          <!-- Helpful Voting Section (আগের মতোই থাকবে) -->
+          <% if (currentUser) { %>
+          <div class="mt-3 pt-2 border-top border-light d-flex align-items-center justify-content-between flex-wrap gap-2">
+            <div class="small text-muted">
+              <% let yesCount = answer.upvotes ? answer.upvotes.length : 0; let noCount = answer.downvotes ? answer.downvotes.length : 0; let totalVotes = yesCount + noCount; let percentage = totalVotes > 0 ? Math.round((yesCount / totalVotes) * 100) : 0; %>
+              <i class="bi bi-graph-up me-1"></i>
+              <span id="vote-pct-<%= answer._id %>"><%= percentage %>%</span> users found this helpful <small class="text-black-50">(<span id="vote-total-<%= answer._id %>"><%= totalVotes %></span> votes)</small>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+              <span class="small text-secondary me-1">Did you find this answer helpful?</span>
+              <button type="button" class="btn btn-sm <%= (currentUser && answer.upvotes && answer.upvotes.includes(currentUser._id)) ? 'btn-success' : 'btn-outline-success' %> px-3 rounded-pill shadow-none" id="btn-yes-<%= answer._id %>" onclick="submitVote('<%= question._id %>', '<%= answer._id %>', 'yes')"> <i class="bi bi-hand-thumbs-up me-1"></i> Yes </button>
+              <button type="button" class="btn btn-sm <%= (currentUser && answer.downvotes && answer.downvotes.includes(currentUser._id)) ? 'btn-danger' : 'btn-outline-danger' %> px-3 rounded-pill shadow-none" id="btn-no-<%= answer._id %>" onclick="submitVote('<%= question._id %>', '<%= answer._id %>', 'no')"> <i class="bi bi-hand-thumbs-down me-1"></i> No </button>
+            </div>
+          </div>
+          <% } %>
+
+          <!-- === ৩. এডিট মোড অন-পেজ ফর্ম (ফাইল আপলোডের জন্য টাইপ টেক্সট পরিবর্তন করে ফাইলে রূপান্তর) === -->
+          <% if (currentUser && currentUser._id.equals(answer.author._id)) { %>
+          <div id="edit-mode-<%= answer._id %>" class="d-none mt-3 p-3 bg-light rounded-3 border">
+            <h6 class="fw-bold text-dark mb-3"><i class="bi bi-pencil-square me-1 text-warning"></i> Update Solution</h6>
+            <!-- ফাইল আপলোডের সুবিধার্থে enctype এবং method পরিবর্তন করা হয়েছে -->
+            <form action="/question/<%= question._id %>/answer/<%= answer._id %>?_method=PUT" method="POST" enctype="multipart/form-data">
+              <div class="mb-3">
+                <label class="form-label text-muted small fw-bold">WRITTEN ANSWER</label>
+                <textarea name="writtenAnswer" class="form-control form-control-sm shadow-none" rows="4" required><%= answer.writtenAnswer %></textarea>
+              </div>
+              <div class="mb-3">
+                <label class="form-label text-muted small fw-bold">UPDATE IMAGES (MULTIPLE ALLOWED)</label>
+                <input type="file" name="imageUrl" class="form-control form-control-sm shadow-none" multiple>
+                <small class="text-text-muted text-black-50" style="font-size: 0.70rem;">ফাঁকা রাখলে আগের ছবিগুলোই থাকবে।</small>
+              </div>
+              <div class="mb-3">
+                <label class="form-label text-muted small fw-bold">UPDATE FILE/PDF (OPTIONAL)</label>
+                <input type="file" name="fileUrl" class="form-control form-control-sm shadow-none">
+              </div>
+              <div class="d-flex gap-2 justify-content-end">
+                <button type="button" class="btn btn-sm btn-secondary px-3" onclick="toggleEditMode('<%= answer._id %>')">Cancel</button>
+                <button type="submit" class="btn btn-sm btn-success px-3 shadow-sm">Save Changes</button>
+              </div>
+            </form>
+          </div>
+          <% } %>
+        </div>
+      </div>
+      <% }) %>
+      <% } else { %>
+      <p class="text-muted small">No solutions have been uploaded yet.</p>
+      <% } %>
+
+
+
+      <!-- Global Report Modal Container -->
+      <div class="modal fade" id="reportItemModal" tabindex="-1" aria-labelledby="reportModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content border-0 shadow-lg rounded-3">
+            <div class="modal-header bg-danger text-white">
+              <h5 class="modal-title fw-bold" id="reportModalLabel"><i class="bi bi-shield-fill-exclamation me-2"></i>Report Content</h5>
+              <button type="button" class="btn-close btn-close-white shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="/report" method="POST">
+              <div class="modal-body p-4">
+                <!-- Hidden Inputs: জাভাস্ক্রিপ্ট এখানে আইডি এবং টাইপ পুশ করবে -->
+                <input type="hidden" name="targetId" id="reportTargetId">
+                <input type="hidden" name="reportOn" id="reportOnType">
+
+                <p class="text-muted small">Please tell us why you are reporting this content. Our moderators will review it shortly.</p>
+
+                <div class="mb-3">
+                  <label class="form-label text-dark fw-semibold small">REASON FOR REPORT</label>
+                  <select name="reason" class="form-select form-select-sm shadow-none" required>
+                    <option value="" disabled selected>Select a reason...</option>
+                    <option value="Spam or misleading">Spam or misleading</option>
+                    <option value="Inappropriate/Abusive language/image/file">Inappropriate/Abusive language/image/file</option>
+                    <option value="Wrong or incorrect solution">Wrong or incorrect solution</option>
+                    <option value="Question title dosen't match it's actual title">Question title dosen't match it's actual title</option>
+                    <option value="Plagiarism/Copied content">Plagiarism or Copyright issue</option>
+                    <option value="AI copy">AI Copy-paste</option>
+                    <option value="Other">Other (Specify in detail)</option>
+                  </select>
+                </div>
+              </div>
+              <div class="modal-footer bg-light border-top-0 d-flex justify-content-end gap-2 py-3">
+                <button type="button" class="btn btn-sm btn-secondary px-3" data-bs-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-sm btn-danger px-4 shadow-sm fw-medium">Submit Report</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+</main>

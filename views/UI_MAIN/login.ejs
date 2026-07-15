@@ -1,0 +1,64 @@
+<% layout('LAYOUT/boilarplate') -%>
+
+<div class="auth-wrapper py-5">
+  <div class="auth-card">
+    <!-- Title Section -->
+    <div class="text-center mb-4">
+      <h2 class="auth-title mb-1">Welcome back</h2>
+      <p class="auth-subtitle">
+        Log in to manage your university note workspace
+      </p>
+    </div>
+
+    <!-- Login Form -->
+    <form action="/login" method="POST" class="needs-validation" novalidate>
+      <!-- Username Field (Passport-local-mongoose native match) -->
+      <div class="form-floating mb-3">
+        <input
+          type="text"
+          class="form-control"
+          id="username"
+          name="username"
+          placeholder="johndoe"
+          required
+          autocomplete="username"
+        />
+        <label for="username"
+          ><i class="fa-regular fa-user me-2"></i>Username</label
+        >
+        <div class="invalid-feedback">Please enter your username handle.</div>
+      </div>
+
+      <!-- Password Field -->
+      <div class="form-floating mb-4">
+        <input
+          type="password"
+          class="form-control"
+          id="password"
+          name="password"
+          placeholder="Password"
+          required
+          autocomplete="current-password"
+        />
+        <label for="password"
+          ><i class="fa-solid fa-lock me-2"></i>Password</label
+        >
+        <div class="invalid-feedback">
+          Please verify your user password authentication.
+        </div>
+      </div>
+
+      <!-- Primary Call to Action -->
+      <button class="btn btn-auth w-100 mb-4 shadow-sm" type="submit">
+        Log In
+      </button>
+
+      <!-- Account Toggle Redirection -->
+      <div class="text-center">
+        <p class="auth-footer-text mb-0">
+          Don't have an account? <a href="/signup" class="auth-link">Sign Up</a>
+        </p>
+      </div>
+    </form>
+  </div>
+</div>

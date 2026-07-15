@@ -1,0 +1,113 @@
+<% layout('LAYOUT/boilarplate') -%>
+
+<!-- Form Container -->
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-12 col-lg-8">
+      <div class="card form-card p-4 p-md-5">
+        <div class="text-center mb-4">
+          <i class="bi bi-pencil-square text-warning display-4"></i>
+          <h2 class="fw-bold text-dark mt-2">Modify Question Entry</h2>
+          <p class="text-muted">
+            Update the current field properties for this item below.
+          </p>
+        </div>
+
+        <!-- HTTP Form Handler targeting the update URL -->
+        <form action="/question/<%= question._id %>/update?_method=PUT" method="POST" class="needs-validation" novalidate enctype="multipart/form-data">
+          <div class="row g-3">
+            <!-- Title Input -->
+            <div class="col-12">
+              <label for="title" class="form-label">Question Title <span class="required-star">*</span></label>
+              <input type="text" class="form-control form-control-lg shadow-sm" id="title" name="title" value="<%= question.title %>" required />
+              <div class="valid-feedback">Looks good!</div>
+              <div class="invalid-feedback">Please Don't leave this empty.</div>
+            </div>
+
+            <!-- Subject Field -->
+            <div class="col-md-6">
+              <label for="subject" class="form-label">Subject Category <span class="required-star">*</span></label>
+              <input type="text" class="form-control shadow-sm" id="subject" name="subject" value="<%= question.subject %>" required />
+              <div class="valid-feedback">Looks good!</div>
+              <div class="invalid-feedback">Please Don't leave this empty.</div>
+            </div>
+
+            <!-- Year Input -->
+            <div class="col-md-6">
+              <label for="year" class="form-label">Academic Year</label>
+              <input type="number" class="form-control shadow-sm" id="year" name="year" value="<%= question.year || '' %>" required />
+              <div class="valid-feedback">Looks good!</div>
+              <div class="invalid-feedback">Please Don't leave this empty.</div>
+            </div>
+
+            <!-- Session Input -->
+            <div class="col-md-6">
+              <label for="session" class="form-label">Semester / Session</label>
+              <input type="text" class="form-control shadow-sm" id="session" name="session" value="<%= question.session || '' %>" required />
+              <div class="valid-feedback">Looks good!</div>
+              <div class="invalid-feedback">Please Don't leave this empty.</div>
+            </div>
+
+            <!-- Description Field -->
+            <div class="col-12">
+              <label for="description" class="form-label">Description Context Details</label>
+              <textarea class="form-control shadow-sm" id="description" name="description" rows="3" required>
+<%= question.description || '' %>
+</textarea>
+              <div class="valid-feedback">Looks good!</div>
+              <div class="invalid-feedback">Please Don't leave this empty.</div>
+            </div>
+
+            <!-- File Attachment URL Link -->
+            <div class="col-12">
+              <label for="fileUrl" class="form-label"><i class="bi bi-file-earmark-pdf text-danger me-1"></i>
+                Document PDF File</label>
+              <input type="file" class="form-control shadow-sm" id="fileUrl" name="fileUrl" value="<%= question.fileUrl || '' %>" />
+
+            </div>
+
+            <!-- Image Display Banner URL Link -->
+            <div class="col-12">
+              <label for="imageUrl" class="form-label"><i class="bi bi-image text-success me-1"></i> Preview Thumbnail
+                Image</label><br>
+              <% if (question.imageUrl && question.imageUrl.url && question.imageUrl.url.length > 0) { %>
+              <% question.imageUrl.url.forEach(function(imgUrl, index) { %>
+
+              <img src="<%= imgUrl %>" style="height: 80px; width: 80px;">
+
+              <% }) %>
+              <% } %>
+              
+              <input type="file" class="form-control shadow-sm mt-2" id="imageUrl" name="imageUrl" value="<%= question.imageUrl %>" multiple/>
+              <div class="valid-feedback">Looks good!</div>
+              <div class="invalid-feedback">Please Don't leave this empty.</div>
+            </div>
+
+            <!-- Array Tags Field -->
+            <div class="col-12 mb-4">
+              <label for="tags" class="form-label"><i class="bi bi-tags me-1"></i> Indexed Search Tags (Comma
+                Separated)</label>
+              <input type="text" class="form-control shadow-sm" id="tags" name="tags" value="<%= question.tags ? question.tags.join(', ') : '' %>" required />
+              <div class="form-text text-muted small">
+                Separate individual keywords using commas.
+              </div>
+              <div class="valid-feedback">Looks good!</div>
+              <div class="invalid-feedback">Please Don't leave this empty.</div>
+            </div>
+
+            <!-- Form Submission Buttons -->
+            <div class="col-12">
+              <hr class="text-black-50 my-3" />
+              <div class="d-flex flex-column flex-sm-row gap-2 justify-content-end">
+                <a href="/question/<%= question._id %>" class="btn btn-light px-4 border">Discard Changes</a>
+                <button type="submit" class="btn btn-warning px-5 fw-bold text-dark">
+                  <i class="bi bi-save me-1"></i> Save Updates
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

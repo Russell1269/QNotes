@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>QNotes - Question Repository</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
+    />
+    <link rel="stylesheet" href="/style.css" />
+    <link rel="stylesheet" href="/styles/login.css" />
+  </head>
+
+  <body>
+    <%- include('../UI_COMPONENTS/navbar') %> <%-
+    include('../UI_COMPONENTS/flash') %>
+    <main class="flex-shrink-0"><%- body %></main>
+
+    <!-- Floating AI Chatbot Widget Button -->
+    <button
+      class="btn btn-danger rounded-circle p-3 position-fixed shadow-lg"
+      style="
+        bottom: 85px;
+        right: 25px;
+        z-index: 1050;
+        width: 55px;
+        height: 55px;
+      "
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#qnotesAiCollapse"
+      aria-expanded="false"
+    >
+      <i class="bi bi-robot fs-4"></i>
+    </button>
+
+    <!-- Fixed Floating AI Chat Window Interface -->
+    <div
+      class="collapse position-fixed shadow-lg rounded-3 border bg-white"
+      id="qnotesAiCollapse"
+      style="
+        bottom: 150px;
+        right: 25px;
+        z-index: 1050;
+        width: 340px;
+        max-width: 90vw;
+      "
+    >
+      <!-- Header -->
+      <div
+        class="bg-danger text-white p-3 rounded-top-3 d-flex align-items-center gap-2"
+      >
+        <i class="bi bi-cpu-fill fs-5"></i>
+        <div>
+          <h6 class="fw-bold mb-0" style="font-size: 0.9rem">
+            QNotes AI Solver
+          </h6>
+          <small class="text-white-50" style="font-size: 0.7rem"
+            >Powered by Gemini 3.5 Flash</small
+          >
+        </div>
+      </div>
+
+      <!-- Chat Feed Display Wrapper -->
+      <div
+        id="aiChatBody"
+        class="p-3 bg-light overflow-y-auto"
+        style="height: 260px; font-size: 0.82rem; scroll-behavior: smooth"
+      >
+        <div class="bg-white p-2 rounded shadow-sm border mb-2 text-secondary">
+          👋 Hello! Ask me any academic question, equation, or course topic to
+          solve.
+        </div>
+      </div>
+
+      <!-- Form Submission Inputs -->
+      <div class="p-2 border-top bg-white rounded-bottom-3">
+        <div class="input-group input-group-sm">
+          <input
+            type="text"
+            id="aiInputPrompt"
+            class="form-control shadow-none border-secondary-subtle"
+            placeholder="Ask a question..."
+          />
+          <button
+            class="btn btn-danger"
+            type="button"
+            id="aiSubmitBtn"
+            onclick="requestAiSolution()"
+          >
+            <i class="bi bi-send-fill"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <%- include('../UI_COMPONENTS/footer') %>
+
+    <script src="/js/boostrapValidation.js"></script>
+    <script src="/js/script.js"></script>
+    <script src="/js/aiScript.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

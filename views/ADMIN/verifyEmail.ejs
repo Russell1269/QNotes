@@ -1,0 +1,32 @@
+<% layout('LAYOUT/boilarplate') -%>
+
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-5">
+      <div class="card border-0 shadow-sm rounded-3 p-4 bg-white border-top border-4 border-danger">
+        <div class="text-center mb-4">
+          <div class="bg-danger bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-2" style="width: 60px; height: 60px;">
+            <i class="bi bi-envelope-open-fill text-danger fs-3"></i>
+          </div>
+          <h4 class="fw-bold text-dark">Email Verification</h4>
+          <p class="text-muted small">Please enter the 6-digit OTP code sent to your academic email address.</p>
+        </div>
+
+        <form action="/verify-email" method="POST">
+          <div class="mb-4">
+            <label class="form-label text-muted small fw-bold tracking-wider text-uppercase">Enter OTP Code</label>
+            <input type="text" name="otpInput" class="form-control form-control-lg text-center fw-bold shadow-none" placeholder="000000" maxlength="6" required style="letter-spacing: 0.3em; font-size: 1.5rem;">
+          </div>
+
+          <button type="submit" class="btn btn-danger w-100 py-2 fw-medium shadow-sm">
+            Verify & Activate Account
+          </button>
+        </form>
+
+        <div class="text-center mt-3">
+          <a href="/register" class="text-decoration-none small text-secondary"><i class="bi bi-arrow-left me-1"></i>Back to Registration</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

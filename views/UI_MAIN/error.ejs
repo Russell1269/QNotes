@@ -1,0 +1,54 @@
+<% layout('LAYOUT/boilarplate') -%>
+
+<!-- Central Error Banner Container -->
+<main class="container my-auto py-5 flex-grow-1 d-flex align-items-center">
+  <div class="row justify-content-center w-100 m-0">
+    <div class="col-12 col-md-8 col-lg-6">
+      <!-- Visual Error Card Grid -->
+      <div
+        class="card border-0 shadow p-4 p-md-5 text-center bg-white rounded-4 animate-fade-in"
+      >
+        <!-- Error Status Circle Graphic Icon -->
+        <div
+          class="error-icon-box mx-auto mb-4 d-flex align-items-center justify-content-center bg-danger-subtle rounded-circle shadow-sm"
+          style="width: 100px; height: 100px"
+        >
+          <i class="bi bi-exclamation-triangle-fill text-danger display-4"></i>
+        </div>
+
+        <!-- Dynamic Error Heading Details -->
+        <h1 class="display-3 fw-black font-monospace text-dark mb-2">
+          <%= status %>
+        </h1>
+        <h3 class="fw-bold text-secondary mb-3">
+          <%= message || "Something went wrong!" %>
+        </h3>
+
+        <p class="text-muted small px-lg-4 mb-4">
+          The requested transaction run could not be resolved cleanly by the
+          host server engine cluster due to internal exceptions.
+        </p>
+
+        <hr class="text-black-50 my-4" />
+
+        <!-- Navigation Recovery Redirect Control Links Buttons -->
+        <div
+          class="d-flex flex-column flex-sm-row gap-2 justify-content-center"
+        >
+          <button
+            onclick="window.history.back()"
+            class="btn btn-light border px-4"
+          >
+            <i class="bi bi-arrow-left me-1"></i> Go Back
+          </button>
+          <a
+            href="/question"
+            class="btn btn-primary px-4 fw-semibold shadow-sm"
+          >
+            <i class="bi bi-house-door me-1"></i> Return Dashboard Home
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>

@@ -1,0 +1,374 @@
+/* ==========================================================================
+   1. GLOBAL & BASE STYLES
+   ========================================================================== */
+body {
+    background-color: #f8f9fa;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* ==========================================================================
+   2. HERO HEADER SECTION
+   ========================================================================== */
+.hero-section {
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    color: white;
+    padding: 3.5rem 0;
+    border-radius: 0 0 2rem 2rem;
+}
+
+/* ==========================================================================
+   3. REPOSITORY CARDS GRID (HOME GALLERY)
+   ========================================================================== */
+.question-card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border: none;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.question-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08) !important;
+}
+
+.card-img-top {
+    height: 180px;
+    object-fit: cover;
+}
+
+.badge-subject {
+    background-color: #e3f2fd;
+    color: #0d6efd;
+}
+
+.tag-badge {
+    background-color: #f1f3f5;
+    color: #495057;
+    font-size: 0.75rem;
+}
+
+/* ==========================================================================
+   4. FORM LAYOUTS (CREATE & EDIT PAGES)
+   ========================================================================== */
+.form-card {
+    background: #ffffff;
+    border: none;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+
+.form-label {
+    font-weight: 600;
+    color: #343a40;
+}
+
+.required-star {
+    color: #dc3545;
+}
+
+/* ==========================================================================
+   5. BROAD IMAGE SHOWCASE (SINGLE QUESTION VIEW PAGE)
+   ========================================================================== */
+.broad-image-container {
+    background-color: #ffffff;
+    border: 1px solid #e3e6f0;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.broad-image {
+    width: 100%;
+    max-height: 600px;
+    /* Limits excessive height on extra large monitors */
+    object-fit: contain;
+    /* Keeps the document aspect ratio perfect without cropping */
+    background-color: #f1f3f5;
+}
+
+.download-area {
+    border-top: 1px solid #edf0f5;
+    background-color: #ffffff;
+}
+
+.meta-card {
+    border: none;
+    border-radius: 12px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+/* ==========================================================================
+   6. NAVBAR UTILITIES
+   ========================================================================== */
+.focus-none:focus {
+    box-shadow: none !important;
+}
+
+.placeholder-light-subtle::placeholder {
+    color: rgba(255, 255, 255, 0.5) !important;
+    font-size: 0.9rem;
+}
+
+.tracking-wider {
+    letter-spacing: 0.08rem;
+}
+
+.hover-link {
+    transition: color 0.2s ease-in-out;
+}
+
+.hover-link:hover {
+    color: #0d6efd !important;
+}
+
+.hover-icon {
+    transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.hover-icon:hover {
+    color: #0d6efd !important;
+    transform: translateY(-2px);
+}
+
+/* //error */
+.fw-black {
+    font-weight: 900;
+}
+
+.border-dashed {
+    border-style: dashed !important;
+}
+
+.shadow-inner {
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.animate-fade-in {
+    animation: fadeInError 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes fadeInError {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ডার্ক থিম ড্রপডাউন হোভার ইফেক্ট */
+.dropdown-menu .dropdown-item:hover {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    color: #fff !important;
+}
+
+/* মোবাইলে ড্রপডাউন মেনু যাতে স্ক্রিনের বাইরে চলে না যায় */
+@media (max-width: 991.98px) {
+    .dropdown-menu {
+        position: static !important;
+        margin-top: 5px !important;
+        background-color: rgba(0, 0, 0, 0.2) !important;
+        border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    }
+}
+
+
+/* flash-messege */
+.flash-alert-container {
+    position: fixed;
+    top: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1100;
+    width: 100%;
+    max-width: 480px;
+    padding: 0 16px;
+    pointer-events: none;
+    /* Prevents catching clicks when empty */
+}
+
+/* Custom Modern Alert Box */
+.custom-flash-alert {
+    pointer-events: auto;
+    /* Re-enables clicks for the actual box */
+    background: #ffffff !important;
+    color: #222222 !important;
+    border: 1px solid #ebebeb !important;
+    border-radius: 16px !important;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1) !important;
+    padding: 14px 20px !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px;
+    animation: alertSlideDown 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+/* Subtle Left Accent Border colors */
+.custom-flash-alert.alert-success {
+    border-left: 5px solid #00a699 !important;
+    /* Premium teal-green */
+}
+
+.custom-flash-alert.alert-danger {
+    border-left: 5px solid #ff385c !important;
+    /* Airbnb-style soft red */
+}
+
+/* Icons styling */
+.flash-icon {
+    font-size: 1.25rem;
+    flex-shrink: 0;
+}
+
+.alert-success .flash-icon {
+    color: #00a699;
+}
+
+.alert-danger .flash-icon {
+    color: #ff385c;
+}
+
+/* Message spacing */
+.flash-msg-text {
+    font-size: 0.95rem;
+    font-weight: 500;
+    margin-bottom: 0;
+    line-height: 1.4;
+    padding-right: 20px;
+}
+
+/* Floating animation */
+@keyframes alertSlideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive adjustment for phones */
+@media (max-width: 576px) {
+    .flash-alert-container {
+        top: 16px;
+        max-width: 100%;
+    }
+
+    .custom-flash-alert {
+        border-radius: 12px !important;
+        padding: 12px 16px !important;
+    }
+}
+
+/* siginup-form */
+:root {
+    --primary-color: #ff385c;
+    --input-focus-shadow: rgba(255, 56, 92, 0.15);
+    --text-dark: #222222;
+    --text-muted: #717171;
+    --border-soft: #ebebeb;
+}
+
+.auth-wrapper {
+    min-height: calc(100vh - 120px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f7f7f7;
+}
+
+.auth-card {
+    background: #ffffff;
+    border: 1px solid var(--border-soft);
+    border-radius: 20px;
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.08);
+    width: 100%;
+    max-width: 520px;
+    padding: 2.5rem;
+}
+
+.auth-title {
+    color: var(--text-dark);
+    font-weight: 700;
+    font-size: 1.75rem;
+    letter-spacing: -0.5px;
+}
+
+.auth-subtitle {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    margin-bottom: 2rem;
+}
+
+/* Custom Floating Form Styling */
+.form-floating>.form-control:focus {
+    border-color: var(--primary-color) !important;
+    box-shadow: 0 0 0 4px var(--input-focus-shadow) !important;
+}
+
+.form-floating>.form-control {
+    border-radius: 12px;
+    border: 1px solid #b0b0b0;
+    color: var(--text-dark);
+}
+
+.form-floating>label {
+    color: var(--text-muted);
+}
+
+.btn-auth {
+    background-color: var(--primary-color);
+    color: #ffffff;
+    font-weight: 600;
+    padding: 0.75rem;
+    border-radius: 12px;
+    border: none;
+    transition: background-color 0.2s ease;
+}
+
+.btn-auth:hover {
+    background-color: #0d6efd;
+    color: #ffffff;
+}
+
+.auth-footer-text {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+.auth-link {
+    color: var(--text-dark);
+    font-weight: 600;
+    text-decoration: underline;
+}
+
+.auth-link:hover {
+    color: var(--primary-color);
+}
+
+/* Mobile Adjustments */
+@media (max-width: 576px) {
+    .auth-wrapper {
+        background-color: #ffffff;
+        padding: 1rem;
+    }
+
+    .auth-card {
+        border: none;
+        box-shadow: none;
+        padding: 1rem 0.5rem;
+    }
+}
+
+ .tracking-wider { letter-spacing: 0.06em; }
+  .transition-all { transition: background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1); }
+  .table hover tbody tr:hover { background-color: rgba(248, 249, 250, 0.85) !important; }
+  .badge { font-size: 0.72rem !important; }
+  .btn-sm { border-radius: 6px !important; }

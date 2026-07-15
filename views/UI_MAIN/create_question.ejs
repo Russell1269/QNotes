@@ -1,0 +1,106 @@
+<% layout('LAYOUT/boilarplate') -%>
+
+<!-- Form Container -->
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-12 col-lg-8">
+      <div class="card form-card p-4 p-md-5">
+        <div class="text-center mb-4">
+          <i class="bi bi-cloud-arrow-up text-primary display-4"></i>
+          <h2 class="fw-bold text-dark mt-2">Upload Question Asset</h2>
+          <p class="text-muted">
+            Fill out the fields below to register a new entry sheet into the
+            public repository index system.
+          </p>
+        </div>
+
+        <!-- HTTP Form Handler -->
+        <form action="/question" method="POST" class="needs-validation" enctype="multipart/form-data" novalidate>
+          <div class="row g-3">
+            <!-- Title Input (Required) -->
+            <div class="col-12">
+              <label for="title" class="form-label">Question Title <span class="required-star">*</span></label>
+              <input type="text" class="form-control form-control-lg shadow-sm" id="title" name="title" placeholder="e.g., Data Structures Final Exam" required />
+              <div class="valid-feedback">Looks good!</div>
+              <div class="invalid-feedback">Please choose a username.</div>
+            </div>
+
+            <!-- Subject Field (Required) -->
+            <div class="col-md-6">
+              <label for="subject" class="form-label">Subject Category <span class="required-star">*</span></label>
+              <input type="text" class="form-control shadow-sm" id="subject" name="subject" placeholder="e.g., Computer Science" required />
+              <div class="valid-feedback">Looks good!</div>
+              <div class="invalid-feedback">Please choose a Catagory.</div>
+            </div>
+
+            <!-- Year Input -->
+            <div class="col-md-6">
+              <label for="year" class="form-label">Academic Year</label>
+              <input type="number" class="form-control shadow-sm" id="year" name="year" placeholder="e.g., 2026" required />
+              <div class="valid-feedback">Looks good!</div>
+              <div class="invalid-feedback">Please enter your academic year.</div>
+            </div>
+
+            <!-- Session Input -->
+            <div class="col-md-6">
+              <label for="session" class="form-label">Semester / Session</label>
+              <input type="text" class="form-control shadow-sm" id="session" name="session" placeholder="e.g., Summer, Spring, Fall" required />
+              <div class="valid-feedback">Looks good!</div>
+              <div class="invalid-feedback">Please enter your semister/session name.</div>
+            </div>
+
+            <!-- Description Field -->
+            <div class="col-12">
+              <label for="description" class="form-label">Description Context Details</label>
+              <textarea class="form-control shadow-sm" id="description" name="description" rows="3" placeholder="Briefly describe the topics covered, total marks, or instructions..." required></textarea>
+              <div class="valid-feedback">Looks good!</div>
+              <div class="invalid-feedback">Please add description.</div>
+            </div>
+
+            <!-- File Attachment URL Link -->
+            <div class="col-12">
+              <label for="fileUrl" class="form-label"><i class="bi bi-file-earmark-pdf text-danger me-1"></i>
+               Upload PDF (max 5MB)</label>
+              <input type="file" class="form-control shadow-sm" id="fileUrl" name="fileUrl" placeholder="https://example.com" />
+              <div class="valid-feedback">Looks good!</div>
+              <div class="invalid-feedback">Please upload a document.</div>
+            </div>
+
+            <!-- Image Display Banner URL Link -->
+            <div class="col-12">
+              <label for="imageUrl" class="form-label"><i class="bi bi-image text-success me-1"></i> Upload Image (max 15MB)</label>
+              <input type="file" class="form-control shadow-sm" id="imageUrl" name="imageUrl" placeholder="Leave empty for system standard default thumbnail placeholder" multiple required />
+              <div class="valid-feedback">Looks good!</div>
+              <div class="invalid-feedback">Please upload your question link.</div>
+            </div>
+
+            <!-- Array Tags String Field -->
+            <div class="col-12 mb-4">
+              <label for="tags" class="form-label"><i class="bi bi-tags me-1"></i> Indexed Search Tags (Comma
+                Separated)</label>
+              <input type="text" class="form-control shadow-sm" id="tags" name="tags" placeholder="cse, algorithm, exam, 2026" required />
+
+              <div class="form-text text-muted small">
+                Separate individual keyword filter items using simple
+                punctuation commas.
+              </div>
+              <div class="valid-feedback">Looks good!</div>
+              <div class="invalid-feedback">Please use some tag.</div>
+            </div>
+
+            <!-- Form Submission Buttons Actions -->
+            <div class="col-12">
+              <hr class="text-black-50 my-3" />
+              <div class="d-flex flex-column flex-sm-row gap-2 justify-content-end">
+                <a href="/" class="btn btn-light px-4 border">Cancel</a>
+                <button type="submit" class="btn btn-primary px-5 fw-bold">
+                  <i class="bi bi-check-circle me-1"></i> Publish Question Paper
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

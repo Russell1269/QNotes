@@ -1,0 +1,107 @@
+:root {
+    --primary-color: #0d6efd;
+    /* Your matching Airbnb signature pink-red */
+    --input-focus-shadow: rgba(255, 56, 92, 0.15);
+    --text-dark: #222222;
+    --text-muted: #717171;
+    --border-soft: #ebebeb;
+}
+
+/* Main Flexbox Center Wrapper */
+.auth-wrapper {
+    min-height: calc(100vh - 140px);
+    /* Seamless viewport adaptive height */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f7f7f7;
+}
+
+/* The Login Floating Card */
+.auth-card {
+    background: #ffffff;
+    border: 1px solid var(--border-soft);
+    border-radius: 20px;
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.08);
+    width: 100%;
+    max-width: 460px;
+    padding: 2.5rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.auth-title {
+    color: var(--text-dark);
+    font-weight: 700;
+    font-size: 1.75rem;
+    letter-spacing: -0.5px;
+}
+
+.auth-subtitle {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    margin-bottom: 2rem;
+}
+
+/* Modern Floating Input Focus Logic */
+.form-floating>.form-control:focus {
+    border-color: var(--primary-color) !important;
+    box-shadow: 0 0 0 4px var(--input-focus-shadow) !important;
+}
+
+.form-floating>.form-control {
+    border-radius: 12px;
+    border: 1px solid #b0b0b0;
+    color: var(--text-dark);
+    font-weight: 500;
+}
+
+.form-floating>label {
+    color: var(--text-muted);
+}
+
+/* CTA Button Style */
+.btn-auth {
+    background-color: var(--primary-color);
+    color: #ffffff;
+    font-weight: 600;
+    padding: 0.75rem;
+    border-radius: 12px;
+    border: none;
+    transition: background-color 0.2s ease;
+}
+
+.btn-auth:hover {
+    background-color: #0066ff;
+    color: #ffffff;
+}
+
+/* Footer & Redirection elements */
+.auth-footer-text {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+.auth-link {
+    color: var(--text-dark);
+    font-weight: 600;
+    text-decoration: underline;
+}
+
+.auth-link:hover {
+    color: var(--primary-color);
+}
+
+/* Responsive Micro-Breakpoints */
+@media (max-width: 576px) {
+    .auth-wrapper {
+        background-color: #ffffff;
+        /* Simplifies UI layout on phones */
+        padding: 1rem;
+    }
+
+    .auth-card {
+        border: none;
+        box-shadow: none;
+        padding: 1.5rem 0.5rem;
+    }
+}

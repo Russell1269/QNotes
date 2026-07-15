@@ -1,0 +1,154 @@
+<% layout('LAYOUT/boilarplate') -%>
+
+<div class="container py-5">
+
+  <!-- Dashboard Main Header Section -->
+  <div class="row align-items-center mb-5 g-3">
+    <div class="col-md-8">
+      <div class="d-flex align-items-center gap-3">
+        <div class="bg-danger bg-opacity-10 p-3 rounded-3 text-danger d-flex align-items-center justify-content-center">
+          <i class="bi bi-shield-lock-fill fs-2"></i>
+        </div>
+        <div>
+          <h2 class="fw-bold text-dark mb-1">Admin Control Panel</h2>
+          <p class="text-muted small mb-0">Monitor platform health, manage active flags, and resolve system reports.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Real-time Stats Grid Component -->
+    <div class="col-md-4">
+      <div class="card border-0 shadow-sm rounded-3 p-3 bg-white border-start border-4 border-danger">
+        <div class="d-flex align-items-center justify-content-between">
+          <div>
+            <span class="text-muted small fw-semibold text-uppercase tracking-wider d-block mb-1">Active Incident Reports</span>
+            <h3 class="fw-bold text-dark mb-0"><%= reports.length %></h3>
+          </div>
+          <div class="bg-light p-2 rounded-circle text-muted fs-4">
+            <i class="bi bi-flag-fill"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <% if (reports && reports.length > 0) { %>
+  <!-- Core Data Layer Presentation Structure -->
+  <div class="card border-0 shadow-sm rounded-3 overflow-hidden bg-white mb-4">
+    <div class="table-responsive">
+      <table class="table table-hover align-middle mb-0">
+
+        <thead class="bg-dark text-white border-bottom-0">
+          <tr>
+            <th class="ps-4 py-3 small fw-bold tracking-wider text-uppercase" style="font-size: 0.75rem;">Reported By</th>
+            <th class="py-3 small fw-bold tracking-wider text-uppercase" style="font-size: 0.75rem;">Classification</th>
+            <th class="py-3 small fw-bold tracking-wider text-uppercase" style="font-size: 0.75rem;">Violation Reason</th>
+            <th class="py-3 small fw-bold tracking-wider text-uppercase" style="font-size: 0.75rem; min-width: 280px;">Content Context Preview</th>
+            <th class="py-3 small fw-bold tracking-wider text-uppercase text-end pe-4" style="font-size: 0.75rem;">System Resolutions</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% reports.forEach(function(report) { %>
+          <tr class="transition-all">
+
+            <!-- Account Profile Box Identifier Column -->
+            <td class="ps-4 py-3">
+              <div class="d-flex align-items-center gap-2">
+                <div class="bg-light text-secondary rounded-circle d-flex align-items-center justify-content-center border" style="width: 38px; height: 38px;">
+                  <i class="bi bi-person-fill fs-5"></i>
+                </div>
+                <div>
+                  <span class="fw-semibold text-dark d-block"><%= report.reportedBy ? report.reportedBy.username : 'Unknown User' %></span>
+                  <small class="text-muted d-block font-monospace" style="font-size: 0.7rem;"><%= report.reportedBy ? report.reportedBy.email : 'N/A' %></small>
+                </div>
+              </div>
+            </td>
+
+            <!-- Platform Asset Object Type Categorization Badge -->
+            <td class="py-3">
+              <% if (report.reportOn === 'Question') { %>
+              <span class="badge bg-primary bg-opacity-10 text-primary border border-primary border-opacity-20 px-3 py-2 rounded-pill small fw-semibold">
+                <i class="bi bi-question-circle-fill me-1"></i> Question
+              </span>
+              <% } else { %>
+              <span class="badge bg-info bg-opacity-10 text-info-emphasis border border-info border-opacity-20 px-3 py-2 rounded-pill small fw-semibold">
+                <i class="bi bi-chat-left-text-fill me-1"></i> Answer
+              </span>
+              <% } %>
+            </td>
+
+            <!-- Moderation Flag Audit Reason Context Info -->
+            <td class="py-3">
+              <div class="d-flex flex-column">
+                <span class="text-dark small fw-medium"><%= report.reason %></span>
+                <small class="text-muted mt-1" style="font-size: 0.68rem;">
+                  <i class="bi bi-clock-history me-1"></i><%= new Date(report.createdAt).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' }) %>
+                </small>
+              </div>
+            </td>
+
+            <!-- Content Stream Data Segment Summary View Area -->
+            <td class="py-3">
+              <div class="p-2 rounded bg-light border border-light max-w-sm">
+                <div class="text-truncate text-secondary small" style="max-width: 320px; font-style: italic;">
+                  <% if (report.targetId) { %>
+                  "<%= report.reportOn === 'Question' ? report.targetId.title : (report.targetId.writtenAnswer || 'No Text Preview Available') %>"
+                  <% } else { %>
+                  <span class="text-danger fw-medium"><i class="bi bi-exclamation-octagon-fill me-1"></i>Target context object was purged from storage.</span>
+                  <% } %>
+                </div>
+              </div>
+
+              <% if (report.targetId) { %>
+              <% if (report.reportOn === 'Question') { %>
+              <a href="/question/<%= report.targetId._id %>" target="_blank" class="btn btn-link btn-sm text-primary p-0 mt-1 fw-bold text-decoration-none d-inline-flex align-items-center gap-1" style="font-size: 0.72rem;">
+                <i class="bi bi-box-arrow-up-right"></i> Inspect Context Canvas
+              </a>
+              <% } else { %>
+              <a href="/question/<%= report.targetId.question || '' %>" target="_blank" class="btn btn-link btn-sm text-primary p-0 mt-1 fw-bold text-decoration-none d-inline-flex align-items-center gap-1" style="font-size: 0.72rem;">
+                <i class="bi bi-box-arrow-up-right"></i> Inspect Context Canvas
+              </a>
+              <% } %>
+              <% } %>
+            </td>
+
+            <!-- Administrative Destruction and Exoneration Action Panels -->
+            <td class="text-end pe-4 py-3">
+              <div class="d-inline-flex gap-2 align-items-center">
+
+                <% if (report.targetId) { %>
+                <form action="/<%= report.reportOn === 'Question' ? 'question' : 'question/' + report.targetId.question + '/answer' %>/<%= report.targetId._id %>?_method=DELETE" method="POST" onsubmit="return confirm('CRITICAL MODERATION NOTICE:\nYou are about to permanently drop this element and all secondary system relations from database clusters.\n\nAre you sure you want to proceed?');" class="d-inline">
+                  <button type="submit" class="btn btn-sm btn-danger px-3 shadow-none fw-medium d-inline-flex align-items-center gap-1" style="font-size: 0.78rem;">
+                    <i class="bi bi-trash3-fill"></i> Purge Content
+                  </button>
+                </form>
+                <% } %>
+
+                <form action="/admin/report/<%= report._id %>?_method=DELETE" method="POST" class="d-inline">
+                  <button type="submit" class="btn btn-sm btn-outline-secondary px-3 shadow-none fw-medium d-inline-flex align-items-center gap-1" style="font-size: 0.78rem;" title="Dismiss this report flag">
+                    <i class="bi bi-check-circle-fill text-success"></i> Dismiss
+                  </button>
+                </form>
+
+              </div>
+            </td>
+
+          </tr>
+          <% }) %>
+        </tbody>
+
+      </table>
+    </div>
+  </div>
+  <% } else { %>
+  <!-- System Optimization Null Space Placeholder State -->
+  <div class="text-center py-5 px-4 bg-white rounded-3 shadow-sm border mt-4">
+    <div class="bg-success bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+      <i class="bi bi-shield-check text-success display-4"></i>
+    </div>
+    <h4 class="fw-bold text-dark mb-2">Platform Clean & Compliant</h4>
+    <p class="text-muted small mx-auto mb-0" style="max-width: 420px;">There are currently zero unanswered moderation incidents on file. All nodes operating normally inside default security boundaries.</p>
+  </div>
+  <% } %>
+</div>

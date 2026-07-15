@@ -1,0 +1,119 @@
+<% layout('/layout/boilarplate') -%>
+
+<div class="auth-wrapper py-5">
+  <div class="auth-card">
+    <!-- Header -->
+    <div class="text-center mb-4">
+      <h2 class="auth-title mb-1">Create your QNotes profile</h2>
+      <p class="auth-subtitle">
+        Keep your university lectures and research organized
+      </p>
+    </div>
+
+    <!-- Signup Form -->
+    <form action="/signup" method="POST" class="needs-validation" novalidate>
+      <!-- 1. Full Name -->
+      <div class="form-floating mb-3">
+        <input
+          type="text"
+          class="form-control"
+          id="name"
+          name="name"
+          placeholder="John Doe"
+          required
+          autocomplete="name"
+        />
+        <label for="name"
+          ><i class="fa-regular fa-id-card me-2"></i>Full Name</label
+        >
+        <div class="invalid-feedback">Please enter your full name.</div>
+      </div>
+
+      <!-- 2. University Name -->
+      <div class="form-floating mb-3">
+        <input
+          type="text"
+          class="form-control"
+          id="university"
+          name="university"
+          placeholder="University Name"
+          required
+        />
+        <label for="university"
+          ><i class="fa-solid fa-graduation-cap me-2"></i>University Name</label
+        >
+        <div class="invalid-feedback">Please provide your university name.</div>
+      </div>
+
+      <!-- 3. Username (Required by passport-local-mongoose) -->
+      <div class="form-floating mb-3">
+        <input
+          type="text"
+          class="form-control"
+          id="username"
+          name="username"
+          placeholder="johndoe123"
+          required
+          autocomplete="username"
+        />
+        <label for="username"
+          ><i class="fa-regular fa-user me-2"></i>Username</label
+        >
+        <div class="invalid-feedback">
+          Please choose a unique identifier handle.
+        </div>
+      </div>
+
+      <!-- 4. Email Field -->
+      <div class="form-floating mb-3">
+        <input
+          type="email"
+          class="form-control"
+          id="email"
+          name="email"
+          placeholder="name@university.edu"
+          required
+          autocomplete="email"
+        />
+        <label for="email"
+          ><i class="fa-regular fa-envelope me-2"></i>Email Address</label
+        >
+        <div class="invalid-feedback">
+          Please enter a valid active email connection.
+        </div>
+      </div>
+
+      <!-- 5. Password Field (Required by passport-local-mongoose backend) -->
+      <div class="form-floating mb-4">
+        <input
+          type="password"
+          class="form-control"
+          id="password"
+          name="password"
+          placeholder="Password"
+          required
+          minlength="6"
+          autocomplete="new-password"
+        />
+        <label for="password"
+          ><i class="fa-solid fa-lock me-2"></i>Password</label
+        >
+        <div class="invalid-feedback">
+          Security password needs a 6 character threshold limit.
+        </div>
+      </div>
+
+      <!-- Submit Button -->
+      <button class="btn btn-auth w-100 mb-4 shadow-sm" type="submit">
+        Sign Up
+      </button>
+
+      <!-- Toggle Link -->
+      <div class="text-center">
+        <p class="auth-footer-text mb-0">
+          Already registered? <a href="/login" class="auth-link">Log In</a>
+        </p>
+      </div>
+    </form>
+  </div>
+</div>
