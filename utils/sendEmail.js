@@ -3,15 +3,18 @@ const nodemailer = require("nodemailer");
 module.exports.sendEmail = async (userEmail, otpCode) => {
   const transporter = nodemailer.createTransport({
     service: "gmail",
-    secure: true, // সিকিউর কানেকশন
+    secure: true,
     auth: {
+      type: "OAuth2",
       user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASS,
+      clientId: process.env.OAUTH_CLIENT_ID,
+      clientSecret: process.env.OAUTH_CLIENT_SECRET,
+      refreshToken: process.env.OAUTH_REFRESH_TOKEN,
     },
 
-   tls: {
-    rejectUnauthorized: false // লোকালহোস্টের সিকিউরিটি ব্লক এড়ানোর জন্য
-  }
+    tls: {
+      rejectUnauthorized: false, // লোকালহোস্টের সিকিউরিটি ব্লক এড়ানোর জন্য
+    },
   });
 
   const mailOptions = {
@@ -30,5 +33,12 @@ module.exports.sendEmail = async (userEmail, otpCode) => {
             </div>
         `,
   };
-  await transporter.sendMail(mailOptions);
+  try {
+    const info = await transporter.sendMail(mailOptions);
+    console.log("Email sent successfully: " + info.messageId);
+    return true;
+  } catch (error) {
+    console.error("Nodemailer Error: ", error);
+    return false;
+  }
 };
