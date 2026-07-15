@@ -78,7 +78,7 @@
             <!-- ইউজার লগইন থাকলে সাইন-আপ/লগইন হাইড হয়ে এগুলো দেখাবে -->
             <li>
               <div class="px-3 py-2 small text-muted border-bottom border-secondary mb-1">
-                Hello, <span class="text-white fw-bold"><%= currentUser.username %></span>
+                Hello, <span class="text-white fw-bold"><%= (typeof currentUser !== 'undefined' && currentUser) ? currentUser.username : 'Guest' %></span>
               </div>
             </li>
             <!-- আপনার কোনো বুকিং বা ড্যাশবোর্ড পেজ থাকলে এখানে লিংক দিতে পারেন -->
