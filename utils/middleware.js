@@ -30,7 +30,9 @@ module.exports.validateQuestionAnswer = (req, res, next) => {
 
 module.exports.isLoggedIn = (req, res, next) => {
   if (!req.isAuthenticated()) {
-    req.session.redirectUrl = req.originalUrl;
+    if (req.method === "GET") {
+      req.session.redirectUrl = req.originalUrl;
+    }
     req.flash(
       "error",
       "To perform this particular task you have to be logged in.",
@@ -91,7 +93,7 @@ module.exports.handleUpload = (req, res, next) => {
 
   uploadFields(req, res, (err) => {
     if (err) {
-      const questionId = req.body.questionId; 
+      const questionId = req.body.questionId;
       if (err instanceof multer.MulterError) {
         req.flash("error", err.message || "Try with lower sized file");
         return questionId
