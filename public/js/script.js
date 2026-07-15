@@ -82,17 +82,26 @@ async function submitVote(questionId, answerId, voteType) {
 }
 
 function changeMainImage(thumbnail) {
-  const mainImg = document.getElementById("mainQuestionImage");
-  mainImg.src = thumbnail.src;
+    const mainImg = document.getElementById("mainQuestionImage");
+    const mainLink = document.getElementById("mainImageLink"); // লিঙ্কটি ট্র্যাক করার জন্য যুক্ত করা হয়েছে
+    
+    // ১. মেইন ইমেজের সোর্স পরিবর্তন করা
+    mainImg.src = thumbnail.src;
+    
+    // ২. মেইন লিঙ্কের href প্রপার্টিও পরিবর্তন করা (এটিই আপনার কাঙ্ক্ষিত সমাধান)
+    if (mainLink) {
+      mainLink.href = thumbnail.src;
+    }
 
-  const allThumbs = document.querySelectorAll(".thumbnail-wrapper");
-  allThumbs.forEach((wrapper) => {
-    wrapper.classList.remove("border-primary", "border-2");
-  });
+    // ৩. আপনার কাস্টম থাম্বনেইল অ্যাক্টিভ বর্ডার টগল লজিক (হুবহু একই রাখা হয়েছে)
+    const allThumbs = document.querySelectorAll(".thumbnail-wrapper");
+    allThumbs.forEach((wrapper) => {
+      wrapper.classList.remove("border-primary", "border-2");
+    });
+    thumbnail.parentElement.classList.add("border-primary", "border-2");
+  }
 
-  thumbnail.parentElement.classList.add("border-primary", "border-2");
-}
-
+  
 function changeAnsPreview(thumbElement, answerId) {
   const clickedImgSrc = thumbElement.querySelector("img").src;
 

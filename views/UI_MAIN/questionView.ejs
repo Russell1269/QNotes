@@ -10,20 +10,22 @@
       <div class="broad-image-container bg-white rounded-3 border p-3 shadow-sm">
 
         <!-- ১. প্রধান বা মেইন ইমেজ প্রিভিউয়ার -->
-        <div class="main-preview-box text-center mb-3 bg-light rounded-3 overflow-hidden border d-flex align-items-center justify-content-center" style="height: 380px;">
-          <img id="mainQuestionImage" src="<%= (question.imageUrl && question.imageUrl.url && question.imageUrl.url.length > 0) ? question.imageUrl.url[0] : 'https://unsplash.com' %>" class="img-fluid object-fit-contain h-100 w-100" alt="<%= question.title %> Preview">
-        </div>
+        <div class="main-preview-box text-center mb-3 bg-light rounded-3 overflow-hidden border d-flex align-items-center justify-content-center" style="height: 380px;"> 
+  <a id="mainImageLink" href="<%= (question.imageUrl && question.imageUrl.url && question.imageUrl.url.length > 0) ? question.imageUrl.url[0] : '#' %>" target="_blank"> 
+    <img id="mainQuestionImage" src="<%= (question.imageUrl && question.imageUrl.url && question.imageUrl.url.length > 0) ? question.imageUrl.url[0] : 'https://unsplash.com' %>" class="img-fluid object-fit-contain h-100 w-100" alt="<%= question.title %> Preview"> 
+  </a> 
+</div> 
 
-        <!-- ২. মাল্টিপল ইমেজ থাম্বনেইল গ্যালারি (যদি একের অধিক ছবি থাকে) -->
-        <% if (question.imageUrl && question.imageUrl.url && question.imageUrl.url.length > 1) { %>
-        <div class="image-gallery-thumbnails d-flex gap-2 justify-content-center flex-wrap mb-4">
-          <% question.imageUrl.url.forEach(function(imgUrl, index) { %>
-          <div class="thumbnail-wrapper rounded border overflow-hidden <%= index === 0 ? 'border-primary border-2' : '' %>" style="width: 70px; height: 70px; cursor: pointer; transition: all 0.2s ease;">
-            <img src="<%= imgUrl %>" class="w-100 h-100 object-fit-cover q-thumb" onclick="changeMainImage(this)" alt="Thumbnail <%= index + 1 %>">
-          </div>
-          <% }) %>
-        </div>
-        <% } %>
+<!-- ২. মাল্টিপল ইমেজ থাম্বনেইল গ্যালারি (যদি একের অধিক ছবি থাকে) --> 
+<% if (question.imageUrl && question.imageUrl.url && question.imageUrl.url.length > 1) { %> 
+  <div class="image-gallery-thumbnails d-flex gap-2 justify-content-center flex-wrap mb-4"> 
+    <% question.imageUrl.url.forEach(function(imgUrl, index) { %> 
+      <div class="thumbnail-wrapper rounded border overflow-hidden <%= index === 0 ? 'border-primary border-2' : '' %>" style="width: 70px; height: 70px; cursor: pointer; transition: all 0.2s ease;"> 
+        <img src="<%= imgUrl %>" class="w-100 h-100 object-fit-cover q-thumb" onclick="changeMainImage(this)" alt="Thumbnail <%= index + 1 %>"> 
+      </div> 
+    <% }) %> 
+  </div> 
+<% } %>
 
         <!-- ৩. ডাউনলোড এবং কন্ট্রিবিউশন সেকশন (নিচের অংশ আগের মতোই থাকবে) -->
         <div class="download-area p-4 text-center border-top bg-light rounded-bottom-3 mx-n3 mb-n3">

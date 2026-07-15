@@ -107,8 +107,8 @@ app.get("/question/:id/answer", (req, res) => {
   res.redirect(`/question/${id}`);
 });
 
-app.get("/admin", (req, res, next) => {
-  return next(new ExpressError(403, "fuck you"));
+app.get("/", (req, res, next) => {
+  res.render("UI_MAIN/rootRoute");
 });
 
 app.all(/(.*)/, (req, res, next) => {

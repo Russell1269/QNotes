@@ -1,0 +1,79 @@
+<% layout('LAYOUT/boilarplate') -%>
+
+<div
+  class="jumbotron text-center text-white py-5 mb-5 shadow-sm rounded-3"
+style="background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);">
+  <h1 class="display-4 fw-bold">Welcome to QNotes</h1>
+  <p class="lead mt-3">
+    Find, view, and download previous year university question papers easily.
+  </p>
+  <hr class="my-4 bg-light" style="width: 100px; margin: 0 auto; height: 3px" />
+  <p>Dive straight into our repository or contribute to help your community.</p>
+  <div class="mt-4">
+    <a
+      class="btn btn-warning btn-lg me-3 fw-bold shadow-sm mb-2"
+      href="/question"
+      role="button"
+    >
+      <i class="bi bi-collection-play me-2"></i>Explore Repository
+    </a>
+    <a
+      class="btn btn-outline-light btn-lg fw-bold"
+      href="/question/new"
+      role="button"
+    >
+      <i class="bi bi-upload me-2"></i>Upload Question
+    </a>
+  </div>
+</div>
+
+<div class="container my-5">
+  <h2 class="text-center fw-bold mb-4">How QNotes Helps You</h2>
+  <div class="row g-4 text-center">
+    <div class="col-md-4">
+      <div class="card h-100 border-0 shadow-sm p-4">
+        <div class="card-body">
+          <div class="text-primary mb-3">
+            <i class="bi bi-search" style="font-size: 2.5rem"></i>
+          </div>
+          <h5 class="card-title fw-bold">Easy Discovery</h5>
+          <p class="card-text text-muted">
+            Use the dedicated search feature in the navigation bar to pinpoint
+            specific course codes or topics instantly.
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card h-100 border-0 shadow-sm p-4">
+        <div class="card-body">
+          <div class="text-success mb-3">
+            <i
+              class="bi bi-file-earmark-arrow-down"
+              style="font-size: 2.5rem"
+            ></i>
+          </div>
+          <h5 class="card-title fw-bold">Instant Access</h5>
+          <p class="card-text text-muted">
+            View precise academic solutions and verified past exam papers
+            straight from your browser anytime, anywhere.
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card h-100 border-0 shadow-sm p-4">
+        <div class="card-body">
+          <div class="text-warning mb-3">
+            <i class="bi bi-people" style="font-size: 2.5rem"></i>
+          </div>
+          <h5 class="card-title fw-bold">Student Powered</h5>
+          <p class="card-text text-muted">
+            Be a contributor. Share your exam scripts, questions, and useful
+            notes to build a stronger academic foundation together.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
