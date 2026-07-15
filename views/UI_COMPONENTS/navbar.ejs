@@ -51,7 +51,7 @@
             <i class="bi bi-list fs-5"></i>
 
             <!-- ডাইনামিক হিউম্যান প্রোফাইল আইকন (Bootstrap Icons ব্যবহার করা হয়েছে) -->
-            <% if (currentUser) { %>
+            <% if (typeof currentUser !== 'undefined' && currentUser) { %>
             <!-- ইউজার লগইন থাকলে আইকনটি প্রাইমারি কালার (নীল) হবে -->
             <i class="bi bi-person-circle fs-5 text-primary"></i>
             <% } else { %>
