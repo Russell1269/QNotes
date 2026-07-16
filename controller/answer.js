@@ -28,7 +28,7 @@ module.exports.postAnswer = async (req, res, next) => {
   }
 
   let newAnswer = new QuestionAnswer({
-    question:id,
+    question: id,
     writtenAnswer: writtenAnswer,
     imageUrl: finalImageObject,
     fileUrl: finalFileObject || undefined,
@@ -92,7 +92,6 @@ module.exports.editAnswer = async (req, res, next) => {
 };
 
 module.exports.deleteAnswer = async (req, res, next) => {
- 
   let { id, answerId } = req.params;
 
   if (!id && !answerId) {
@@ -181,4 +180,9 @@ module.exports.vote = async (req, res) => {
     totalVotes > 0 ? Math.round((yesCount / totalVotes) * 100) : 0;
 
   return res.json({ success: true, percentage, totalVotes, userVote });
+};
+
+module.exports.redirectAnswer = (req, res) => {
+  let { id } = req.params;
+  res.redirect(`/question/${id}`);
 };

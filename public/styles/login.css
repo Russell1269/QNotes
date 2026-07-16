@@ -105,3 +105,62 @@
         padding: 1.5rem 0.5rem;
     }
 }
+
+/* //phase 2 */
+/* ব্যাকগ্রাউন্ড গ্রেডিয়েন্ট এবং থিম কালার ম্যাপিং */
+.bg-light-gradient {
+  background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+}
+
+/* কাস্টম কার্ড ডিজাইন */
+.signup-card-custom {
+  border-radius: 20px !important;
+  background: #ffffff;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* লোগোর চারপাশের আইকন রিং */
+.brand-icon-wrapper {
+  width: 55px;
+  height: 55px;
+  border-radius: 14px;
+  background-color: rgba(13, 110, 253, 0.1); /* Bootstrap Primary Soft alpha */
+}
+
+/* ইনপুট ফিল্ডের মডার্ন ডিজাইন */
+.input-custom {
+  border-radius: 10px !important;
+  border: 1px solid #ced4da !important;
+}
+
+.input-custom:focus {
+  border-color: #0d6efd !important;
+  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.15) !important;
+}
+
+/* লগইন বাটন ইফেক্ট */
+.btn-login-custom {
+  border-radius: 10px !important;
+  padding: 11px !important;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-login-custom:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(13, 110, 253, 0.25) !important;
+}
+
+/* গুগল বাটনের জন্য অফিশিয়াল স্ট্যান্ডার্ড */
+.btn-google-custom {
+  border-radius: 10px !important;
+  border: 1px solid #dadce0 !important;
+  background-color: #fff !important;
+  color: #3c4043 !important;
+  transition: background-color 0.2s, box-shadow 0.2s;
+}
+
+.btn-google-custom:hover {
+  background-color: #f8f9fa !important;
+  border-color: #c6c6c6 !important;
+  box-shadow: 0 1px 3px rgba(60,64,67, 0.3) !important;
+}

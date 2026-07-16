@@ -1,6 +1,7 @@
 const User = require("../models/user");
 const passport = require("passport");
-const {sendEmail} = require("../utils/sendEmail");
+const GoogleStrategy = require("passport-google-oidc");
+const { sendVerificationEmail } = require("../utils/sendEmail");
 
 module.exports.signupUserForm = (req, res) => {
   res.render("UI_MAIN/signUp");
@@ -28,7 +29,7 @@ module.exports.signupUser = async (req, res, next) => {
   });
   const registeredUser = await User.register(user, password);
 
-  await sendEmail(email, otp);
+  await sendVerificationEmail(email, name, otp);
 
   req.session.verifyUserId = registeredUser._id;
 
@@ -117,4 +118,35 @@ module.exports.logOutUser = (req, res, next) => {
     const redirectUrl = res.locals.redirectUrl || "/question";
     res.redirect(redirectUrl);
   });
+};
+
+module.exports.universityUsernameInputForm = (req, res) => {
+  if (req.user.university && req.user.university !== "Not Provided Yet") {
+    return res.redirect("/");
+  }
+  res.render("UI_MAIN/completeProfile");
+};
+
+module.exports.postUniUserForm = async (req, res) => {
+  const { university, username } = req.body;
+
+  const existingUser = await User.findOne({
+    username: username.toLowerCase().trim(),
+  });
+  if (existingUser && existingUser._id.toString() !== req.user._id.toString()) {
+    req.flash("error", "Username is already taken. Try another one.");
+    return res.redirect("/complete-profile");
+  }
+
+  req.user.username = username.toLowerCase().trim();
+  req.user.university = university.trim();
+  await req.user.save();
+
+  req.flash("success", "Profile completed successfully! Welcome to QNotes.");
+  res.redirect("/question");
+};
+
+module.exports.postGoogleLogin = (req, res) => {
+  req.flash("success", "Welcome back! Logged in successfully with Google.");
+  res.redirect("/question");
 };

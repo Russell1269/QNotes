@@ -1,0 +1,51 @@
+<% layout('LAYOUT/boilarplate') -%>
+<div class="row mt-5">
+  <div class="col-md-6 offset-md-3">
+    <div class="card shadow p-4">
+      <h3 class="mb-4 text-center">Complete Your Profile</h3>
+      <form
+        action="/complete-profile"
+        method="POST"
+        class="needs-validation"
+        novalidate
+      >
+        <!-- ইউজারনেম ইনপুট -->
+        <div class="mb-3">
+          <label for="username" class="form-label">Choose a Username</label>
+          <div class="input-group">
+            <span class="input-group-text">@</span>
+            <input
+              type="text"
+              name="username"
+              id="username"
+              class="form-control"
+              placeholder="username123"
+              required
+            />
+          </div>
+          <div class="invalid-feedback">Please choose a unique username.</div>
+        </div>
+
+        <!-- ইউনিভার্সিটি ইনপুট -->
+        <div class="mb-4">
+          <label for="university" class="form-label"
+            >Your University Name</label
+          >
+          <input
+            type="text"
+            name="university"
+            id="university"
+            class="form-control"
+            placeholder="e.g., Dhaka University"
+            required
+          />
+          <div class="invalid-feedback">Please enter your university name.</div>
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100">
+          Save & Explore QNotes
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

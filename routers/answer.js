@@ -18,25 +18,24 @@ const {
   editAnswer,
   deleteAnswer,
   vote,
+  redirectAnswer,
 } = require("../controller/answer");
 const { storage } = require("../cloudconfig");
 const upload = multer({ storage: storage });
 
-router.route("/").post(
-  isLoggedIn,
-  handleUpload,
-  validateQuestionAnswer,
-  wrapAsync(postAnswer),
-);
+router
+  .route("/")
+  .get(redirectAnswer)
+  .post(
+    isLoggedIn,
+    handleUpload,
+    validateQuestionAnswer,
+    wrapAsync(postAnswer),
+  );
 
 router
   .route("/:answerId")
-  .put(
-    isLoggedIn,
-    isAuthor,
-   handleUpload,
-    wrapAsync(editAnswer),
-  )
+  .put(isLoggedIn, isAuthor, handleUpload, wrapAsync(editAnswer))
   .delete(isLoggedIn, isAuthor, wrapAsync(deleteAnswer));
 
 router.route("/:answerId/vote").post(isLoggedIn, wrapAsync(vote));

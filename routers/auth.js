@@ -18,6 +18,9 @@ const {
   logOutUser,
   getVerifyEmail,
   postVerifyEmail,
+  universityUsernameInputForm,
+  postUniUserForm,
+  postGoogleLogin,
 } = require("../controller/auth");
 
 router.route("/signup").get(signupUserForm).post(wrapAsync(signupUser));
@@ -37,5 +40,22 @@ router
 router.route("/logout").get(isLoggedIn, logOutUser);
 
 router.route("/verify-email").get(getVerifyEmail).post(postVerifyEmail);
+
+router
+  .route("/google")
+  .get(passport.authenticate("google", { scope: ["profile", "email"] }));
+
+router.route("/google/callback").get(
+  passport.authenticate("google", {
+    failureRedirect: "/login",
+    failureFlash: true,
+  }),
+  postGoogleLogin,
+);
+
+router
+  .route("/complete-profile")
+  .get(isLoggedIn, universityUsernameInputForm)
+  .post(isLoggedIn, wrapAsync(postUniUserForm));
 
 module.exports = router;

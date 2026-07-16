@@ -108,3 +108,21 @@ module.exports.handleUpload = (req, res, next) => {
     next();
   });
 };
+
+module.exports.isProfileComplete = (req, res, next) => {
+  if (req.isAuthenticated()) {
+    const hasTempUsername =
+      req.user.username && req.user.username.startsWith("google_");
+    const hasNoUniversity =
+      !req.user.university || req.user.university === "Not Provided Yet";
+
+    if (hasTempUsername || hasNoUniversity) {
+      req.flash(
+        "error",
+        "Please set your username and university name to continue.",
+      );
+      return res.redirect("/complete-profile");
+    }
+  }
+  next();
+};

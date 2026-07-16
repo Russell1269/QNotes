@@ -26,12 +26,23 @@ const userSchema = new mongoose.Schema({
   },
   university: {
     type: String,
-    required: [true, "University name is required"],
     trim: true,
   },
   isVerified: {
     type: Boolean,
     default: false,
+  },
+  googleId: {
+    type: String,
+    unique: true, 
+    sparse: true, 
+  },
+  provider: {
+    type: String, 
+    default: "local",
+  },
+  profilePicture: {
+    type: String, 
   },
   emailOTP: {
     type: String,
