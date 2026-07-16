@@ -35,7 +35,7 @@ const aiRouter = require("./routers/ai");
 
 //app-configaration
 const app = express();
-const port = 8080;
+const port = process.env.PORT || 8080;
 const dbUrl = process.env.ATLAS_DB_URL;
 const localUrl = "mongodb://127.0.0.1:27017/qnotes";
 

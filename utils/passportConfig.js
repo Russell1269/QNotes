@@ -10,7 +10,9 @@ passport.use(
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: "http://localhost:8080/google/callback",
+      callbackURL: process.env.NODE_ENV === "production" 
+        ? "https://qnotes-archive.onrender.com" 
+        : "http://localhost:8080/google/callback",
       scope: ["profile", "email"],
     },
     async function verify(accessToken, refreshToken, profile, cb) {
