@@ -158,7 +158,9 @@ module.exports.postGoogleLogin = (req, res) => {
         console.error("Session save error:", err);
         return res.redirect("/login");
       }
-      res.redirect("/question");
+      setTimeout(() => {
+        res.redirect("/question");
+      }, 1000);
     });
   });
 };
