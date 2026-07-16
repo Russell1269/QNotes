@@ -8,7 +8,9 @@ const {
   validateQuestion,
   isLoggedIn,
   isOwner,
-  handleUpload,
+  handleUploadAndSizeCheck,
+  // handleUpload,
+  // validateUploadSize,
 } = require("../utils/middleware");
 const {
   index,
@@ -23,7 +25,12 @@ const {
 router
   .route("/")
   .get(wrapAsync(index))
-  .post(isLoggedIn, handleUpload, validateQuestion, wrapAsync(postQuestion));
+  .post(
+    isLoggedIn,
+    handleUploadAndSizeCheck,
+    validateQuestion,
+    wrapAsync(postQuestion),
+  );
 
 router.route("/new").get(isLoggedIn, formForPostQuestion);
 
@@ -41,7 +48,7 @@ router
   .put(
     isLoggedIn,
     isOwner,
-    handleUpload,
+    handleUploadAndSizeCheck,
     validateQuestion,
     wrapAsync(postUpdatedQuestion),
   );

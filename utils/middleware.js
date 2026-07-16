@@ -85,29 +85,29 @@ module.exports.isAdmin = async (req, res, next) => {
 };
 
 //for max upload
-module.exports.handleUpload = (req, res, next) => {
-  const uploadFields = upload.fields([
-    { name: "imageUrl", maxCount: 4 },
-    { name: "fileUrl", maxCount: 1 },
-  ]);
+// module.exports.handleUpload = (req, res, next) => {
+//   const uploadFields = upload.fields([
+//     { name: "imageUrl", maxCount: 4 },
+//     { name: "fileUrl", maxCount: 1 },
+//   ]);
 
-  uploadFields(req, res, (err) => {
-    if (err) {
-      const questionId = req.body.questionId;
-      if (err instanceof multer.MulterError) {
-        req.flash("error", err.message || "Try with lower sized file");
-        return questionId
-          ? res.redirect(`/question/${questionId}`)
-          : res.redirect("/question");
-      }
-      req.flash("error", "Something went wrong.");
-      return questionId
-        ? res.redirect(`/question/${questionId}`)
-        : res.redirect("/question");
-    }
-    next();
-  });
-};
+//   uploadFields(req, res, (err) => {
+//     if (err) {
+//       const questionId = req.body.questionId;
+//       if (err instanceof multer.MulterError) {
+//         req.flash("error", err.message || "Try with lower sized file");
+//         return questionId
+//           ? res.redirect(`/question/${questionId}`)
+//           : res.redirect("/question");
+//       }
+//       req.flash("error", "Something went wrong.");
+//       return questionId
+//         ? res.redirect(`/question/${questionId}`)
+//         : res.redirect("/question");
+//     }
+//     next();
+//   });
+// };
 
 module.exports.isProfileComplete = (req, res, next) => {
   if (req.isAuthenticated()) {
@@ -125,4 +125,83 @@ module.exports.isProfileComplete = (req, res, next) => {
     }
   }
   next();
+};
+
+// module.exports.validateUploadSize = (req, res, next) => {
+//   const uploadFields = upload.fields([
+//     { name: "imageUrl", maxCount: 4 },
+//     { name: "fileUrl", maxCount: 1 },
+//   ]);
+
+//   uploadFields(req, res, (err) => {
+//     if (err) {
+//       req.flash("error", "Somthing error happend while you upload.");
+//       return res.redirect("back");
+//     }
+
+    
+//     const maxPdfSize = 5 * 1024 * 1024;  
+//     const maxImgSize = 15 * 1024 * 1024; 
+
+//     if (req.files && req.files["fileUrl"]) {
+//       const pdfFile = req.files["fileUrl"][0];
+//       if (pdfFile.size > maxPdfSize) {
+//         req.flash("error", "PDF file cross 5MB limits.");
+//         return res.redirect(`/question/${req.body.questionId}`); 
+//         // নোট: যদি নির্দিষ্ট আইডি থাকে তবে দিতে পারেন: res.redirect(`/question/${req.body.questionId}`);
+//       }
+//     }
+
+//     if (req.files && req.files["imageUrl"]) {
+//       for (let imgFile of req.files["imageUrl"]) {
+//         if (imgFile.size > maxImgSize) {
+//           req.flash("error", "image cross 15MB limit.");
+//           return res.redirect(`/question/${req.body.questionId}`);
+//         }
+//       }
+//     }
+//     next();
+//   });
+// };
+
+module.exports.handleUploadAndSizeCheck = (req, res, next) => {
+  const uploadFields = upload.fields([
+    { name: "imageUrl", maxCount: 4 },
+    { name: "fileUrl", maxCount: 1 },
+  ]);
+
+  uploadFields(req, res, (err) => {
+    const questionId = req.body.questionId; 
+
+    if (err) {
+      if (err instanceof multer.MulterError) {
+        req.flash("error", err.message || "Try with lower sized file");
+        return questionId ? res.redirect(`/question/${questionId}`) : res.redirect("/question");
+      }
+      req.flash("error", "Something went wrong during upload.");
+      return questionId ? res.redirect(`/question/${questionId}`) : res.redirect("/question");
+    }
+
+   
+    const maxPdfSize = 5 * 1024 * 1024;  // 5MB
+    const maxImgSize = 15 * 1024 * 1024; // 15MB
+
+    if (req.files && req.files["fileUrl"] && req.files["fileUrl"][0]) {
+      const pdfFile = req.files["fileUrl"][0];
+      if (pdfFile.size > maxPdfSize) {
+        req.flash("error", "PDF file cross 5MB limits.");
+        return questionId ? res.redirect(`/question/${questionId}`) : res.redirect("/question");
+      }
+    }
+
+    if (req.files && req.files["imageUrl"]) {
+      for (let imgFile of req.files["imageUrl"]) {
+        if (imgFile.size > maxImgSize) {
+          req.flash("error", "Image cross 15MB limit.");
+          return questionId ? res.redirect(`/question/${questionId}`) : res.redirect("/question");
+        }
+      }
+    }
+    next();
+  });
 };

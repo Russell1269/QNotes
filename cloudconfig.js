@@ -36,40 +36,39 @@ const storage = new CloudinaryStorage({
 
 const upload = multer({
   storage: storage,
-  limits: {
-    fileSize: 15 * 1024 * 1024, // গ্লোবাল ম্যাক্সিমাম লিমিট ১৫ MB রাখা হলো (যেহেতু ইমেজের লিমিট বেশি)
-  },
-  fileFilter: (req, file, cb) => {
-    // এক্সপ্রেস রিকোয়েস্ট থেকে content-length (বাইট আকারে) রিড করা
-    const fileSize = parseInt(req.headers['content-length']);
-    
-    if (file.fieldname === "fileUrl") {
-      const maxPdfSize = 5 * 1024 * 1024;
-      if (fileSize > maxPdfSize) {
-        // সাইজ বেশি হলে Multer Error থ্রো করবে
-        const error = new multer.MulterError("LIMIT_FILE_SIZE");
-        error.message = "PDF <= 5MB";
-        req.flash("error", error.message);
-        return cb(error, false);
-      }
-    } 
-    
-    if (file.fieldname === "imageUrl") {
-      const maxImgSize = 15 * 1024 * 1024; // ১৫ MB
-      if (fileSize > maxImgSize) {
-        const error = new multer.MulterError("LIMIT_FILE_SIZE");
-        error.message = "Image <= ১৫";
-        req.flash("error", error.message);
-        return cb(error, false);
-      }
-    }
-    
-    cb(null, true); // সব ঠিক থাকলে ফাইল আপলোড পাস হবে
-  }
+  // limits: {
+  //   fileSize: 15 * 1024 * 1024, // গ্লোবাল ম্যাক্সিমাম লিমিট ১৫ MB রাখা হলো (যেহেতু ইমেজের লিমিট বেশি)
+  // },
+  // fileFilter: (req, file, cb) => {
+  //   // এক্সপ্রেস রিকোয়েস্ট থেকে content-length (বাইট আকারে) রিড করা
+  //   const fileSize = parseInt(req.headers['content-length']);
+
+  //   if (file.fieldname === "fileUrl") {
+  //     const maxPdfSize = 5 * 1024 * 1024;
+  //     if (fileSize > maxPdfSize) {
+  //       const error = new multer.MulterError("LIMIT_FILE_SIZE");
+  //       error.message = "PDF <= 5MB";
+  //       req.flash("error", error.message);
+  //       return cb(error, false);
+  //     }
+  //   }
+
+  //   if (file.fieldname === "imageUrl") {
+  //     const maxImgSize = 15 * 1024 * 1024;
+  //     if (fileSize > maxImgSize) {
+  //       const error = new multer.MulterError("LIMIT_FILE_SIZE");
+  //       error.message = "Image <= ১৫";
+  //       req.flash("error", error.message);
+  //       return cb(error, false);
+  //     }
+  //   }
+
+  //   cb(null, true);
+  // }
 });
 
 module.exports = {
   cloudinary,
   storage,
-  upload
+  upload,
 };

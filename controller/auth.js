@@ -148,5 +148,14 @@ module.exports.postUniUserForm = async (req, res) => {
 
 module.exports.postGoogleLogin = (req, res) => {
   req.flash("success", "Welcome back! Logged in successfully with Google.");
-  res.redirect("/question");
+
+  // 🌟 ফিক্সড: সেশনটি ডাটাবেজে পুরোপুরি সেভ হওয়া পর্যন্ত কোডকে জোরপূর্বক ওয়েট করানো হচ্ছে
+  req.session.save((err) => {
+    if (err) {
+      console.error("Session save error:", err);
+      return res.redirect("/login");
+    }
+    // সেশন সফলভাবে মেমরিতে বসার পরেই কেবল ড্যাশবোর্ডে রিডাইরেক্ট হবে
+    res.redirect("/question");
+  });
 };

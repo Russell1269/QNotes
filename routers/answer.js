@@ -10,7 +10,8 @@ const {
   validateQuestionAnswer,
   isLoggedIn,
   isAuthor,
-  handleUpload,
+  handleUploadAndSizeCheck,
+  // handleUpload,
 } = require("../utils/middleware");
 const wrapAsync = require("../utils/wrapAsync");
 const {
@@ -28,14 +29,14 @@ router
   .get(redirectAnswer)
   .post(
     isLoggedIn,
-    handleUpload,
+    handleUploadAndSizeCheck,
     validateQuestionAnswer,
     wrapAsync(postAnswer),
   );
 
 router
   .route("/:answerId")
-  .put(isLoggedIn, isAuthor, handleUpload, wrapAsync(editAnswer))
+  .put(isLoggedIn, isAuthor, handleUploadAndSizeCheck, wrapAsync(editAnswer))
   .delete(isLoggedIn, isAuthor, wrapAsync(deleteAnswer));
 
 router.route("/:answerId/vote").post(isLoggedIn, wrapAsync(vote));
