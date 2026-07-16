@@ -63,7 +63,7 @@ app.use(cookieParser(process.env.SESSION_SECRECT));
 //session-middleware
 const sessionOption = {
   secret: process.env.SESSION_SECRECT,
-  resave: false,
+  resave: true,
   saveUninitialized: false,
   proxy: true,
   cookie: {

@@ -146,7 +146,7 @@ module.exports.postUniUserForm = async (req, res) => {
   res.redirect("/question");
 };
 
-module.exports.postGoogleLogin = (req, res) => {
+module.exports.postGoogleLogin = (req, res,next) => {
   req.logIn(req.user, (err) => {
     if (err) {
       console.error("Passport login error:", err);
@@ -156,7 +156,7 @@ module.exports.postGoogleLogin = (req, res) => {
     req.session.save((err) => {
       if (err) {
         console.error("Session save error:", err);
-        return res.redirect("/login");
+        return next(err);
       }
       setTimeout(() => {
         res.redirect("/question");
