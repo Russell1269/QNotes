@@ -35,7 +35,6 @@ const aiRouter = require("./routers/ai");
 
 //app-configaration
 const app = express();
-app.set("trust proxy", 1);
 const port = process.env.PORT || 8080;
 const dbUrl = process.env.ATLAS_DB_URL;
 const localUrl = "mongodb://127.0.0.1:27017/qnotes";
@@ -63,29 +62,24 @@ app.use(cookieParser(process.env.SESSION_SECRECT));
 //session-middleware
 const sessionOption = {
   secret: process.env.SESSION_SECRECT,
-  resave: true,
+  resave: false,
   saveUninitialized: false,
-  proxy: true,
   cookie: {
     expires: Date.now() + 1000 * 60 * 60 * 24 * 3,
     maxAge: 1000 * 60 * 60 * 24 * 3,
     httpOnly: true,
-     secure: process.env.NODE_ENV === "production", 
-      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", 
   },
   store: MongoStore.create({
-    mongoUrl: dbUrl, 
+    mongoUrl: dbUrl,
     crypto: {
-      secret: process.env.SESSION_SECRECT, 
+      secret: process.env.SESSION_SECRECT,
     },
-    ttl: 7 * 24 * 60 * 60, 
+    ttl: 7 * 24 * 60 * 60,
   }),
 };
 
 app.use(session(sessionOption));
 app.use(flash());
-
-
 
 //passport-initiation
 app.use(passport.initialize());
