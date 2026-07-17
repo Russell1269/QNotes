@@ -17,16 +17,24 @@
         <form action="/question/<%= question._id %>/update?_method=PUT" method="POST" class="needs-validation" novalidate enctype="multipart/form-data">
           <div class="row g-3">
             <!-- Title Input -->
-            <div class="col-12">
-              <label for="title" class="form-label">Question Title <span class="required-star">*</span></label>
-              <input type="text" class="form-control form-control-lg shadow-sm" id="title" name="title" value="<%= question.title %>" required />
+            <div class="col-md-6">
+              <label for="title" class="form-label">Course Title <span class="required-star">*</span></label>
+              <input type="text" class="form-control form-control-md shadow-sm" id="title" name="title" value="<%= question.title %>" required />
               <div class="valid-feedback">Looks good!</div>
               <div class="invalid-feedback">Please Don't leave this empty.</div>
             </div>
 
+            <!-- exam type -->
+            <div class="col-md-6">
+              <label for="examType" class="form-label">Exam Type</label>
+              <input type="text" class="form-control shadow-sm" id="examType" name="examType" value="<%= !question.examType ? '' : question.examType %>" required />
+              <div class="valid-feedback">Looks good!</div>
+              <div class="invalid-feedback">Please enter your Exam Type.</div>
+            </div>
+
             <!-- Subject Field -->
             <div class="col-md-6">
-              <label for="subject" class="form-label">Subject Category <span class="required-star">*</span></label>
+              <label for="subject" class="form-label">Department Name <span class="required-star">*</span></label>
               <input type="text" class="form-control shadow-sm" id="subject" name="subject" value="<%= question.subject %>" required />
               <div class="valid-feedback">Looks good!</div>
               <div class="invalid-feedback">Please Don't leave this empty.</div>
@@ -39,6 +47,15 @@
               <div class="valid-feedback">Looks good!</div>
               <div class="invalid-feedback">Please Don't leave this empty.</div>
             </div>
+
+            <!-- Batch -->
+            <div class="col-md-6">
+              <label for="batch" class="form-label">Batch</label>
+              <input type="text" class="form-control shadow-sm" id="batch" name="batch" value="<%= question.batch || '' %>" required />
+              <div class="valid-feedback">Looks good!</div>
+              <div class="invalid-feedback">Please Don't leave this empty.</div>
+            </div>
+
 
             <!-- Session Input -->
             <div class="col-md-6">
@@ -77,8 +94,8 @@
 
               <% }) %>
               <% } %>
-              
-              <input type="file" class="form-control shadow-sm mt-2" id="imageUrl" name="imageUrl" value="<%= question.imageUrl %>" multiple/>
+
+              <input type="file" class="form-control shadow-sm mt-2" id="imageUrl" name="imageUrl" value="<%= question.imageUrl %>" multiple />
               <div class="valid-feedback">Looks good!</div>
               <div class="invalid-feedback">Please Don't leave this empty.</div>
             </div>

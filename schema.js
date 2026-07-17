@@ -7,6 +7,8 @@ const questionJoiSchema = Joi.object({
     "any.required": "Question title is a mandatory field.",
   }),
 
+  examType: Joi.string().trim().required(),
+  batch: Joi.string().trim().required(),
   description: Joi.string().trim().allow("", null), // Allows description to be optional or cleared cleanly
 
   subject: Joi.string().trim().required().messages({
@@ -43,17 +45,12 @@ const questionJoiSchema = Joi.object({
 
 module.exports = { questionJoiSchema };
 
-
 module.exports.answerJoiSchema = Joi.object({
-
-  writtenAnswer: Joi.string()
-    .required()
-    .trim()
-    .messages({
-      'string.empty': 'লিখিত উত্তর ফাঁকা রাখা যাবে না।',
-      'any.required': 'লিখিত উত্তর দেওয়া বাধ্যতামূলক।'
-    }),
+  writtenAnswer: Joi.string().required().trim().messages({
+    "string.empty": "লিখিত উত্তর ফাঁকা রাখা যাবে না।",
+    "any.required": "লিখিত উত্তর দেওয়া বাধ্যতামূলক।",
+  }),
 
   imageUrl: Joi.any().optional(),
-  fileUrl: Joi.any().optional() 
-})
+  fileUrl: Joi.any().optional(),
+});

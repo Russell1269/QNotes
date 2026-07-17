@@ -29,24 +29,25 @@ module.exports.signupUser = async (req, res, next) => {
   });
   const registeredUser = await User.register(user, password);
 
-  await sendVerificationEmail(email, name, otp);
+  // await sendVerificationEmail(email, name, otp);
 
   req.session.verifyUserId = registeredUser._id;
 
-  // req.logIn(registeredUser, (err) => {
-  //   if (err) {
-  //     req.flash("error", err.message);
-  //     return next(err);
-  //   }
-  //   req.flash("success", "signup success");
-  //   let redirectUrl = res.locals.redirectUrl || "/question";
-  //   res.redirect(redirectUrl);
-  // });
-  req.flash(
-    "success",
-    "Registration successful! An OTP code has been sent to your email.",
-  );
-  res.redirect("/verify-email");
+  req.logIn(registeredUser, (err) => {
+    if (err) {
+      req.flash("error", err.message);
+      return next(err);
+    }
+    req.flash("success", "signup success");
+    let redirectUrl = res.locals.redirectUrl || "/question";
+    res.redirect(redirectUrl);
+  });
+
+  // req.flash(
+  //   "success",
+  //   "Registration successful! An OTP code has been sent to your email.",
+  // );
+  // res.redirect("/verify-email");
 };
 
 module.exports.getVerifyEmail = (req, res) => {
@@ -92,21 +93,37 @@ module.exports.loginForm = (req, res) => {
 };
 
 module.exports.postLogIn = (req, res) => {
-  if (!req.user.isVerified) {
-    const targetUserId = req.user._id;
-    req.logout((err) => {
-      if (err) return next(err);
-      req.session.verifyUserId = targetUserId;
-      req.flash(
-        "error",
-        "Your email is not verified yet. Please verify first.",
-      );
-      return res.redirect("/verify-email");
-    });
+  // if (!req.user.isVerified) {
+  //   const targetUserId = req.user._id;
+  //   req.logout((err) => {
+  //     if (err) return next(err);
+  //     req.session.verifyUserId = targetUserId;
+  //     req.flash(
+  //       "error",
+  //       "Your email is not verified yet. Please verify first.",
+  //     );
+  //     return res.redirect("/verify-email");
+  //   });
+  // } else {
+  //   const redirectUrl = res.locals.redirectUrl || "/question";
+  //   res.redirect(redirectUrl);
+  // }
+
+  //except OTP system
+  if (req.user && !req.user.isVerified) {
+    req.flash(
+      "error",
+      `Welcome ${req.user.username}! Notice: Your academic profile is currently not verified.`,
+    );
   } else {
-    const redirectUrl = res.locals.redirectUrl || "/question";
-    res.redirect(redirectUrl);
+    req.flash(
+      "success",
+      `Welcome back, ${req.user.username}! Login successful.`,
+    );
   }
+  const redirectUrl = res.locals.redirectUrl || "/question";
+
+  return res.redirect(redirectUrl);
 };
 
 module.exports.logOutUser = (req, res, next) => {

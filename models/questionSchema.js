@@ -3,12 +3,17 @@ const QuestionAnswer = require("./questionAnswer");
 const Report = require("./reports");
 const { type } = require("node:os");
 const { ref } = require("node:process");
+const { required } = require("joi");
 
 const questionSchema = new mongoose.Schema({
   title: {
     type: String,
     required: true,
     trim: true,
+  },
+  examType: {
+    type: String,
+    required: true,
   },
   description: {
     type: String,
@@ -21,12 +26,16 @@ const questionSchema = new mongoose.Schema({
   year: {
     type: Number,
   },
+  batch: {
+    type: String,
+    required: true,
+  },
   session: {
     type: String,
   },
   fileUrl: {
     url: {
-      type: String, // প্রশ্নপত্রের PDF বা ডকুমেন্ট লিঙ্ক
+      type: String,
     },
     filename: {
       type: String,

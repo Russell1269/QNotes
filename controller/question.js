@@ -33,7 +33,7 @@ module.exports.index = async (req, res, next) => {
 };
 
 module.exports.postQuestion = async (req, res, next) => {
-  const { title, description, subject, year, session, tags } = req.body;
+  const { title,examType,batch, description, subject, year, session, tags } = req.body;
 
   let finalImageObject = undefined;
   let finalFileObject = undefined;
@@ -66,11 +66,13 @@ module.exports.postQuestion = async (req, res, next) => {
 
   const newQuestion = new Questions({
     title: title,
+    examType:examType,
+    batch:batch,
     description: description,
     subject: subject,
-    year: year ? Number(year) : undefined, // Parse integer string safely
+    year: year ? Number(year) : undefined, 
     session: session,
-    fileUrl: finalFileObject, // এতে { url, filename } সেভ হবে
+    fileUrl: finalFileObject, 
     imageUrl: finalImageObject,
     tags: tagsArray,
   });
@@ -78,7 +80,7 @@ module.exports.postQuestion = async (req, res, next) => {
     req.flash("error", "Something went wrong");
     throw new ExpressError(404, "hello");
   }
-
+  
   newQuestion.owner = req.user._id;
   await newQuestion.save();
   req.flash("success", "You successfully upload a question");
@@ -164,6 +166,8 @@ module.exports.postUpdatedQuestion = async (req, res) => {
   }
   const {
     title,
+    examType,
+    batch,
     description,
     subject,
     year,
@@ -175,6 +179,8 @@ module.exports.postUpdatedQuestion = async (req, res) => {
 
   const updateData = {
     title: title,
+    examType:examType,
+    batch:batch,
     description: description,
     subject: subject,
     year: year ? Number(year) : undefined,

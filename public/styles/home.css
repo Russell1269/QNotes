@@ -1,0 +1,78 @@
+/* --- QNotes Space Slate-Navy Palette --- */
+.tech-card {
+  background-color: #1e293b !important; /* Premium Slate/Midnight Blue */
+  border: 1px solid rgba(255, 255, 255, 0.05) !important;
+  box-shadow: 0 4px 20px rgba(15, 23, 42, 0.3) !important;
+}
+
+/* Eye-Catchy Dynamic Hover Matrix */
+.tech-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 38px rgba(14, 165, 233, 0.18) !important; /* Vibrant Cyan Neon Glow */
+  border-color: rgba(14, 165, 233, 0.4) !important; /* Shifting edge highlight */
+}
+
+/* Glassmorphism Exam Type Badge */
+.bg-blur-glass {
+  background: rgba(15, 23, 42, 0.6) !important;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+.border-white-10 {
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+}
+
+/* Vibrant Primary Blue Badge */
+.bg-primary-gradient {
+  background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%) !important;
+}
+.border-primary-light {
+  border: 1px solid rgba(14, 165, 233, 0.3) !important;
+}
+
+/* Text & Colors Optimization */
+.text-cyan-accent { color: #38bdf8 !important; }
+.text-slate-muted { color: #94a3b8 !important; }
+.border-slate { border-color: rgba(51, 65, 85, 0.5) !important; }
+
+/* Custom Subject Pill Frame */
+.bg-subject-pill {
+  background-color: rgba(14, 165, 233, 0.1) !important;
+}
+.border-cyan-dim {
+  border: 1px solid rgba(14, 165, 233, 0.15) !important;
+}
+
+/* Custom Tag Layout */
+.bg-tag-pill {
+  background-color: #0f172a !important;
+}
+
+/* Avatar Frame Framework */
+.bg-avatar-frame { background-color: #0f172a !important; }
+.border-avatar { border-color: rgba(51, 65, 85, 0.6) !important; }
+
+/* Custom Buttons Styling */
+.btn-download-circle {
+  background-color: #334155;
+  color: #e2e8f0;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: all 0.2s ease;
+}
+.btn-download-circle:hover {
+  background-color: #0284c7;
+  color: white;
+}
+
+.btn-action-cyan {
+  background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+  color: white;
+  border: none;
+}
+.btn-action-cyan:hover {
+  background: linear-gradient(135deg, #38bdf8 0%, #0ea5e9 100%);
+  color: white;
+}
+
+.hover-cyan-text { transition: color 0.2s ease; }
+.hover-cyan-text:hover { color: #38bdf8 !important; }

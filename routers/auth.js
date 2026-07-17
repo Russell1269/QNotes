@@ -39,7 +39,7 @@ router
 
 router.route("/logout").get(isLoggedIn, logOutUser);
 
-router.route("/verify-email").get(getVerifyEmail).post(postVerifyEmail);
+// router.route("/verify-email").get(getVerifyEmail).post(postVerifyEmail);
 
 router
   .route("/google")

@@ -136,6 +136,14 @@
             <span class="text-muted"><i class="bi bi-calendar3 me-1"></i> Date Posted:</span>
             <span class="fw-semibold text-secondary"><%= new Date(question.createdAt).toLocaleDateString() %></span>
           </div>
+          <div class="d-flex justify-content-between mb-2 small">
+            <span class="text-muted"><i class="bi bi-people-fill"></i> Batch:</span>
+            <span class="fw-semibold text-secondary"><%= question.batch || "" %></span>
+          </div>
+          <div class="d-flex justify-content-between mb-2 small">
+            <span class="text-muted"><i class="bi bi-check-square"></i> Exam Type:</span>
+            <span class="fw-semibold text-secondary"><%= question.examType || "" %></span>
+          </div>
         </div>
 
         <!-- Description Box -->
