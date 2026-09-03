@@ -101,6 +101,20 @@ app.use("/report", report);
 app.use("/admin", adminRouter);
 app.use("/question/:id/answer", answer);
 
+//cornjobs
+app.get('/api/execute-cron-task', (req, res) => {
+    try {
+        console.log("Cron job running successfully at: ", new Date().toLocaleString());
+        res.status(200).json({ 
+            success: true, 
+            message: "Cron task executed successfully!" 
+        });
+    } catch (error) {
+        console.error("Cron job failed:", error);
+        res.status(500).json({ success: false, error: error.message });
+    }
+});
+
 app.get("/", (req, res, next) => {
   res.render("UI_MAIN/rootRoute");
 });
